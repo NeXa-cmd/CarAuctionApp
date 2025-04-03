@@ -6,6 +6,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const path = require('path');
 const fs = require('fs');
+const updateAuctionStatuses = require('./utils/auctionStatusUpdater');
 
 // Routes
 const authRoutes = require('./routes/auth.routes');
@@ -89,8 +90,18 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/car_aucti
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('MongoDB connection error:', err));
+.then(() => {
+  console.log('Connected to MongoDB');
+  
+  // Initial update
+  updateAuctionStatuses();
+  
+  // Schedule updates every minute
+  setInterval(updateAuctionStatuses, 60000);
+})
+.catch((error) => {
+  console.error('MongoDB connection error:', error);
+});
 
 // WebSocket connection handling
 io.on('connection', (socket) => {

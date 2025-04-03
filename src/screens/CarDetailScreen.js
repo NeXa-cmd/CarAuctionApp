@@ -13,11 +13,14 @@ import {
 import socketService from '../services/socket';
 import { placeBid as apiPlaceBid, getAuctionById } from '../services/api';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Toast from 'react-native-toast-message';
+import { useAuth } from '../contexts/AuthContext';
 
 const API_URL = 'http://localhost:5001/api';
 
 const CarDetailScreen = ({ route, navigation }) => {
   const { auctionId } = route.params;
+  const { user } = useAuth();
   const [auction, setAuction] = useState(null);
   const [bidAmount, setBidAmount] = useState('');
   const [loading, setLoading] = useState(true);
@@ -110,7 +113,52 @@ const CarDetailScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     fetchAuctionDetails();
-  }, [auctionId]);
+    
+    if (auction?._id) {
+      socketService.joinAuction(auction._id);
+      
+      // Listen for new bids
+      socketService.onNewBid((bidData) => {
+        if (bidData.auctionId === auction._id) {
+          setAuction(prev => ({
+            ...prev,
+            currentPrice: bidData.amount,
+            currentWinner: bidData.bidder
+          }));
+        }
+      });
+
+      // Listen for auction ended event
+      socketService.onAuctionEnded((auctionData) => {
+        if (auctionData.auctionId === auction._id) {
+          setAuction(prev => ({
+            ...prev,
+            status: 'ended',
+            currentPrice: auctionData.finalPrice,
+            winner: auctionData.winnerId
+          }));
+          
+          // Show a toast notification
+          Toast.show({
+            type: 'info',
+            text1: 'Auction Ended',
+            text2: auctionData.winnerId === user.id 
+              ? 'Congratulations! You won this auction!' 
+              : 'This auction has ended.',
+            visibilityTime: 4000,
+            autoHide: true,
+          });
+        }
+      });
+    }
+
+    return () => {
+      if (auction?._id) {
+        socketService.leaveAuction(auction._id);
+        socketService.removeAllListeners();
+      }
+    };
+  }, [auction?._id]);
 
   const getDetails = (car) => [
     { id: '1', icon: 'speedometer-outline', label: 'Mileage', value: car.mileage ? `${car.mileage.toLocaleString()} mi` : 'N/A' },
@@ -119,26 +167,6 @@ const CarDetailScreen = ({ route, navigation }) => {
     { id: '4', icon: 'car-outline', label: 'Transmission', value: car.transmission || 'N/A' },
     { id: '5', icon: 'construct-outline', label: 'Condition', value: car.condition || 'N/A' },
   ];
-
-  useEffect(() => {
-    if (auction) {
-      socketService.connect();
-      socketService.joinAuction(auction._id);
-      socketService.onNewBid((newBidData) => {
-        if (newBidData.auctionId === auction._id) {
-          setAuction(prevAuction => ({
-            ...prevAuction,
-            currentBid: newBidData.amount
-          }));
-        }
-      });
-
-      return () => {
-        socketService.leaveAuction(auction._id);
-        socketService.disconnect();
-      };
-    }
-  }, [auction?._id]);
 
   const placeBid = async () => {
     if (!bidAmount || parseInt(bidAmount) <= auction.currentBid) {

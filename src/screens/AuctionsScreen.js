@@ -4,8 +4,7 @@ import { ButtonGroup } from 'react-native-elements';
 import CarCard from '../components/CarCard';
 import { getMyBids, getMyAuctions } from '../services/api';
 import socketService from '../services/socket';
-
-
+import Toast from 'react-native-toast-message';
 
 const AuctionsScreen = ({ navigation }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -16,33 +15,53 @@ const AuctionsScreen = ({ navigation }) => {
 
   useEffect(() => {
     loadAuctions();
-    setupSocketListeners();
+    
+    // Listen for new bids
+    socketService.onNewBid((bidData) => {
+      setAuctions(prevAuctions => {
+        return prevAuctions.map(auction => {
+          if (auction._id === bidData.auctionId) {
+            return {
+              ...auction,
+              currentPrice: bidData.amount,
+              currentWinner: bidData.bidder
+            };
+          }
+          return auction;
+        });
+      });
+    });
+
+    // Listen for auction ended events
+    socketService.onAuctionEnded((auctionData) => {
+      setAuctions(prevAuctions => {
+        return prevAuctions.map(auction => {
+          if (auction._id === auctionData.auctionId) {
+            return {
+              ...auction,
+              status: 'ended',
+              currentPrice: auctionData.finalPrice,
+              winner: auctionData.winnerId
+            };
+          }
+          return auction;
+        });
+      });
+      
+      // Show a toast notification when an auction ends
+      Toast.show({
+        type: 'info',
+        text1: 'Auction Ended',
+        text2: 'An auction has just ended. Check My Auctions to see if you won!',
+        visibilityTime: 4000,
+        autoHide: true,
+      });
+    });
+
     return () => {
-      // Cleanup socket listeners
       socketService.removeAllListeners();
     };
   }, [selectedIndex]);
-
-  const setupSocketListeners = () => {
-    // Only set up listeners for active bids
-    if (selectedIndex === 0) {
-      socketService.onNewBid((newBidData) => {
-        setAuctions(prevAuctions => 
-          prevAuctions.map(auction => 
-            auction._id === newBidData.auctionId
-              ? { ...auction, currentBid: newBidData.amount }
-              : auction
-          )
-        );
-      });
-
-      socketService.onAuctionEnded((endedAuction) => {
-        setAuctions(prevAuctions => 
-          prevAuctions.filter(auction => auction._id !== endedAuction._id)
-        );
-      });
-    }
-  };
 
   const loadAuctions = async () => {
     try {

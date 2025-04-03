@@ -7,45 +7,16 @@ import {
   TextInput,
   ActivityIndicator,
   Alert,
-  Image,
   ScrollView,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../contexts/AuthContext';
-import * as ImagePicker from 'react-native-image-picker';
 
 const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [profileImage, setProfileImage] = useState(null);
   const { register, loading, error } = useAuth();
-
-  const handleImagePick = () => {
-    const options = {
-      mediaType: 'photo',
-      maxWidth: 500,
-      maxHeight: 500,
-      quality: 0.8,
-    };
-
-    ImagePicker.launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        return;
-      }
-
-      if (response.error) {
-        Alert.alert('Error', 'Failed to pick image: ' + response.error);
-        return;
-      }
-
-      if (response.assets && response.assets[0]) {
-        const source = response.assets[0];
-        setProfileImage(source.uri);
-      }
-    });
-  };
 
   const validatePassword = (password) => {
     const minLength = 8;
@@ -108,22 +79,12 @@ const RegisterScreen = ({ navigation }) => {
         return;
       }
 
-      // Create form data for multipart request
-      const formData = new FormData();
-      formData.append('username', username.trim());
-      formData.append('email', email.trim());
-      formData.append('password', password);
-
-      // Add profile image if selected
-      if (profileImage) {
-        formData.append('profileImage', {
-          uri: profileImage,
-          type: 'image/jpeg',
-          name: 'profile-image.jpg'
-        });
-      }
-
-      await register(formData);
+      await register(username.trim(), email.trim(), password);
+      Alert.alert(
+        'Success',
+        'Account created successfully! Please log in.',
+        [{ text: 'OK', onPress: () => navigation.navigate('Login') }]
+      );
     } catch (err) {
       Alert.alert(
         'Registration Failed',
@@ -138,21 +99,6 @@ const RegisterScreen = ({ navigation }) => {
       <View style={styles.content}>
         <Text style={styles.title}>Create Account</Text>
         <Text style={styles.subtitle}>Sign up to get started</Text>
-
-        <View style={styles.avatarContainer}>
-          <Image
-            source={{ 
-              uri: profileImage || 'https://via.placeholder.com/100'
-            }}
-            style={styles.avatar}
-          />
-          <TouchableOpacity 
-            style={styles.changePhotoButton}
-            onPress={handleImagePick}
-          >
-            <Icon name="camera" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View>
 
         <View style={styles.form}>
           <TextInput
@@ -239,60 +185,30 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     textAlign: 'center',
   },
-  avatarContainer: {
-    position: 'relative',
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: '#E5E5EA',
-    overflow: 'hidden',
-    alignSelf: 'center',
-    marginBottom: 24,
-  },
-  avatar: {
-    width: '100%',
-    height: '100%',
-  },
-  changePhotoButton: {
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#007AFF',
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   form: {
-    backgroundColor: '#FFFFFF',
-    padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    marginTop: 24,
   },
   input: {
-    backgroundColor: '#F2F2F7',
-    padding: 12,
+    backgroundColor: '#FFFFFF',
     borderRadius: 8,
+    padding: 16,
     marginBottom: 16,
     fontSize: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   button: {
     backgroundColor: '#007AFF',
-    padding: 16,
     borderRadius: 8,
+    padding: 16,
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 16,
   },
   buttonDisabled: {
-    backgroundColor: '#007AFF80',
+    backgroundColor: '#A0A0A0',
   },
   buttonText: {
     color: '#FFFFFF',
@@ -306,11 +222,12 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     marginTop: 16,
-    alignItems: 'center',
+    padding: 8,
   },
   loginText: {
     color: '#8E8E93',
     fontSize: 14,
+    textAlign: 'center',
   },
   loginLink: {
     color: '#007AFF',

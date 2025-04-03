@@ -65,29 +65,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (formData) => {
+  const register = async (username, email, password) => {
     try {
       setLoading(true);
       setError(null);
 
-      const response = await api.post('/auth/register', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      const { token, user } = response.data;
+      const response = await api.register(username, email, password);
       
-      // Store the token
-      await AsyncStorage.setItem('token', token);
+      if (response && response.token) {
+        // Store the token
+        await AsyncStorage.setItem('token', response.token);
+        
+        // Set the auth state
+        setUser(response.user);
+        setToken(response.token);
+      }
       
-      // Set the auth state
-      setUser(user);
-      setToken(token);
-      
-      return response.data;
+      return response;
     } catch (err) {
-      const message = err.response?.data?.message || 'Registration failed. Please try again.';
+      const message = err.message || 'Registration failed. Please try again.';
       setError(message);
       throw new Error(message);
     } finally {

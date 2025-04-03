@@ -1,0 +1,95 @@
+\chapter{Analyse des Besoins}
+
+\section{Besoins Fonctionnels}
+\subsection{Gestion des Utilisateurs}
+\begin{itemize}
+    \item Inscription et authentification des utilisateurs
+    \item Gestion du profil utilisateur
+    \item Historique des enchères (gagnées et perdues)
+    \item Système de notifications personnalisées
+\end{itemize}
+
+\subsection{Gestion des Enchères}
+\begin{itemize}
+    \item Création et modification d'enchères
+    \item Placement d'offres en temps réel
+    \item Mise à jour automatique des statuts (upcoming, active, ended)
+    \item Système de paiement sécurisé
+\end{itemize}
+
+\subsection{Administration}
+\begin{itemize}
+    \item Gestion complète des utilisateurs
+    \item Supervision des enchères en cours
+    \item Gestion du catalogue de véhicules
+    \item Génération de rapports d'activité
+\end{itemize}
+
+\section{Besoins Non Fonctionnels}
+\begin{itemize}
+    \item Performance et temps de réponse optimaux
+    \item Sécurité des données et des transactions
+    \item Scalabilité de l'application
+    \item Disponibilité 24/7
+    \item Interface utilisateur intuitive
+\end{itemize}
+
+\section{Diagrammes UML}
+\subsection{Diagramme des Cas d'Utilisation}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/use_case_diagram.png}
+    \caption{Diagramme des cas d'utilisation du système d'enchères}
+    \label{fig:use_case}
+\end{figure}
+
+Le diagramme des cas d'utilisation ci-dessus illustre les principales interactions entre les acteurs (utilisateurs et administrateurs) et le système. Les fonctionnalités sont regroupées selon leur nature : gestion des comptes, participation aux enchères et administration.
+
+\subsection{Diagramme de Séquence}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/sequence_diagram.png}
+    \caption{Diagramme de séquence pour le processus d'enchère}
+    \label{fig:sequence}
+\end{figure}
+
+Ce diagramme de séquence montre les interactions entre les différents composants du système lors d'une enchère, notamment :
+\begin{itemize}
+    \item La communication en temps réel via Socket.IO
+    \item La mise à jour automatique des statuts
+    \item La notification des participants
+    \item La gestion des gagnants
+\end{itemize}
+
+\subsection{Diagramme de Classes}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/class_diagram.png}
+    \caption{Diagramme de classes du système}
+    \label{fig:class}
+\end{figure}
+
+Le diagramme de classes présente la structure statique du système, montrant les relations entre :
+\begin{itemize}
+    \item Les utilisateurs et leurs rôles
+    \item Les enchères et leurs statuts
+    \item Les véhicules et leurs caractéristiques
+    \item Les offres et les notifications
+\end{itemize}
+
+\section{Contraintes Techniques}
+\subsection{Environnement de Développement}
+\begin{itemize}
+    \item Node.js v23.10.0
+    \item React Native v0.78
+    \item MongoDB pour la base de données
+    \item Socket.IO pour la communication temps réel
+\end{itemize}
+
+\subsection{Contraintes de Performance}
+\begin{itemize}
+    \item Temps de réponse < 2 secondes
+    \item Mise à jour en temps réel < 500ms
+    \item Support de multiples connexions simultanées
+    \item Gestion efficace des ressources serveur
+\end{itemize} 

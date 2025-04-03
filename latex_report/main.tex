@@ -1,0 +1,53 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+\documentclass[a4paper,12pt]{report}
+
+% Basic packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+% Arabic support
+\usepackage{arabxetex}
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+
+% Page geometry
+\geometry{top=2.5cm,bottom=2.5cm,right=2.5cm,left=2.5cm}
+
+% Graphics path
+\graphicspath{{images/}{images_pfe/}}
+
+% Make sure hyperref is loaded last
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=blue
+}
+
+\begin{document}
+
+\pagenumbering{Roman}
+
+\include{chapters/01-Dedicace}
+\include{chapters/02-Remerciements}
+\include{chapters/03-Resume}
+
+\tableofcontents
+\clearpage
+
+\pagenumbering{arabic}
+
+\include{chapters/05-Introduction}
+\include{chapters/06-Art}
+\include{chapters/07-Existant}
+\include{chapters/08-Besoins}
+\include{chapters/09-Conception}
+\include{chapters/10-Realisation}
+\include{chapters/11-Conclusion}
+
+\end{document} 

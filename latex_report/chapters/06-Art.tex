@@ -1,0 +1,78 @@
+\chapter{État de l'Art}
+
+\section{Technologies Mobile}
+\subsection{React Native}
+React Native \cite{reactnative} est un framework de développement mobile qui permet de créer des applications natives pour iOS et Android à partir d'un seul code source JavaScript. Les principaux avantages sont :
+
+\begin{itemize}
+    \item \textbf{Performance native :} Rendu des composants natifs
+    \item \textbf{Développement multiplateforme :} Un seul code pour iOS et Android
+    \item \textbf{Hot Reloading :} Mise à jour instantanée pendant le développement
+    \item \textbf{Large écosystème :} Nombreuses bibliothèques disponibles
+\end{itemize}
+
+Dans notre projet, React Native v0.78 est utilisé pour développer l'interface mobile, offrant une expérience utilisateur fluide et native.
+
+\section{Technologies Backend}
+\subsection{Node.js}
+Node.js \cite{nodejs} est une plateforme serveur basée sur le moteur JavaScript V8 de Chrome. Notre projet utilise Node.js v23.10.0, qui offre :
+
+\begin{itemize}
+    \item \textbf{Exécution asynchrone :} Gestion efficace des opérations I/O
+    \item \textbf{Performance :} Traitement rapide des requêtes
+    \item \textbf{Scalabilité :} Gestion optimale des connexions simultanées
+    \item \textbf{NPM :} Gestionnaire de paquets riche
+\end{itemize}
+
+\subsection{MongoDB}
+MongoDB \cite{mongodb} est notre choix de base de données NoSQL, offrant :
+
+\begin{itemize}
+    \item \textbf{Schéma flexible :} Adaptation facile aux changements
+    \item \textbf{Performances :} Requêtes optimisées
+    \item \textbf{Scalabilité :} Répartition de charge facilitée
+    \item \textbf{Format JSON :} Intégration naturelle avec Node.js
+\end{itemize}
+
+\section{Communication en Temps Réel}
+\subsection{Socket.IO}
+Socket.IO \cite{socketio} est utilisé pour la communication bidirectionnelle en temps réel :
+
+\begin{itemize}
+    \item \textbf{WebSocket :} Communication bidirectionnelle
+    \item \textbf{Fallback :} Support de différents modes de transport
+    \item \textbf{Rooms :} Gestion des canaux d'enchères
+    \item \textbf{Événements :} Notifications en temps réel
+\end{itemize}
+
+\section{Architecture et Patterns}
+\subsection{Architecture Microservices}
+Notre application suit une architecture microservices avec :
+
+\begin{itemize}
+    \item Service d'authentification
+    \item Service de gestion des enchères
+    \item Service de notifications
+    \item Service de gestion des utilisateurs
+\end{itemize}
+
+\subsection{Patterns de Conception}
+Les principaux patterns utilisés sont :
+
+\begin{itemize}
+    \item \textbf{MVC :} Séparation des responsabilités
+    \item \textbf{Observer :} Pour les notifications en temps réel
+    \item \textbf{Factory :} Création d'objets complexes
+    \item \textbf{Singleton :} Connexions à la base de données
+\end{itemize}
+
+\section{Sécurité}
+\subsection{Authentification et Autorisation}
+La sécurité est assurée par :
+
+\begin{itemize}
+    \item \textbf{JWT :} Tokens d'authentification
+    \item \textbf{Bcrypt :} Hachage des mots de passe
+    \item \textbf{CORS :} Protection contre les requêtes malveillantes
+    \item \textbf{Rate Limiting :} Protection contre les attaques par force brute
+\end{itemize} 

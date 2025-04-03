@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import { Platform } from 'react-native';
+import { API_URL } from '@env';
 
 // For iOS simulator, use localhost
 // For Android emulator, use 10.0.2.2
@@ -80,6 +81,7 @@ class SocketService {
       this.socket.disconnect();
       this.socket = null;
       this.connected = false;
+      console.log('Socket disconnected');
     }
   }
 
@@ -91,6 +93,7 @@ class SocketService {
     if (this.isConnected()) {
       console.log(`Joining auction room: auction_${auctionId}`);
       this.socket.emit(EVENTS.JOIN_AUCTION, auctionId);
+      console.log('Joined auction room:', auctionId);
     } else {
       console.warn('Socket not connected. Attempting to reconnect...');
       this.connect();
@@ -101,6 +104,7 @@ class SocketService {
     if (this.isConnected()) {
       console.log(`Leaving auction room: auction_${auctionId}`);
       this.socket.emit(EVENTS.LEAVE_AUCTION, auctionId);
+      console.log('Left auction room:', auctionId);
     }
   }
 
@@ -145,6 +149,7 @@ class SocketService {
       Object.values(EVENTS).forEach(event => {
         this.socket.removeAllListeners(event);
       });
+      console.log('Removed all socket listeners');
     }
   }
 }

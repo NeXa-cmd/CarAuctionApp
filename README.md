@@ -1,97 +1,227 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Car Auction App
 
-# Getting Started
+A mobile application for car auctions built with React Native, Node.js, and MongoDB.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Project Structure
 
-## Step 1: Start Metro
+The project consists of three main parts:
+- `/backend` - Node.js/Express backend server
+- `/admin-dashboard` - React admin dashboard
+- Mobile app (root directory) - React Native mobile application
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Prerequisites
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+Before you begin, ensure you have installed:
+- Node.js (v14 or later)
+- npm (v6 or later)
+- MongoDB (v4.4 or later)
+- Xcode (for iOS development)
+- Android Studio (for Android development)
+- CocoaPods (for iOS dependencies)
 
-```sh
-# Using npm
+## Environment Setup
+
+### 1. Backend Setup
+
+```bash
+# Navigate to backend directory
+cd backend
+
+# Install dependencies
+npm install
+
+# Create .env file
+cp .env.example .env
+
+# Update .env file with your MongoDB connection string and other configurations
+# Example:
+# MONGODB_URI=mongodb://localhost:27017/car-auction
+# JWT_SECRET=your-secret-key
+# PORT=5001
+```
+
+### 2. Admin Dashboard Setup
+
+```bash
+# Navigate to admin dashboard directory
+cd admin-dashboard
+
+# Install dependencies
+npm install
+
+# Create .env file
+cp .env.example .env
+
+# Update .env file with your backend API URL
+# Example:
+# REACT_APP_API_URL=http://localhost:5001/api
+```
+
+### 3. Mobile App Setup
+
+```bash
+# In the root directory
+
+# Install dependencies
+npm install
+
+# Install iOS dependencies
+cd ios
+pod install
+cd ..
+
+# Create .env file
+cp .env.example .env
+
+# Update .env file with your backend API URL
+# Example:
+# API_URL=http://localhost:5001/api
+```
+
+## Running the Application
+
+### 1. Start Backend Server
+
+```bash
+cd backend
 npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
+The backend server will start on http://localhost:5001
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### 2. Start Admin Dashboard
 
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+cd admin-dashboard
+npm start
 ```
 
-### iOS
+The admin dashboard will open in your browser at http://localhost:3000
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### 3. Start Mobile App
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+#### iOS
+```bash
+# Start Metro bundler
+npx react-native start
 
-```sh
-bundle install
+# In a new terminal, run iOS app
+npx react-native run-ios
 ```
 
-Then, and every time you update your native dependencies, run:
+#### Android
+```bash
+# Start Metro bundler
+npx react-native start
 
-```sh
-bundle exec pod install
+# In a new terminal, run Android app
+npx react-native run-android
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## Initial Setup
 
-```sh
-# Using npm
-npm run ios
+1. First, start the backend server
+2. Create an admin account using the provided script:
+```bash
+cd backend
+node src/scripts/createAdmin.js
+```
+This will create an admin account with:
+- Email: admin@example.com
+- Password: admin123
 
-# OR using Yarn
-yarn ios
+3. Log in to the admin dashboard and create some car listings
+4. Create a regular user account through the mobile app
+
+## Common Issues and Solutions
+
+### iOS Build Issues
+If you encounter iOS build issues:
+```bash
+cd ios
+pod deintegrate
+pod install
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Android Build Issues
+If you encounter Android build issues:
+```bash
+cd android
+./gradlew clean
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### Metro Bundler Issues
+If Metro bundler shows cached file issues:
+```bash
+npx react-native start --reset-cache
+```
 
-## Step 3: Modify your app
+## API Documentation
 
-Now that you have successfully run the app, let's make changes!
+The backend API is available at:
+- Base URL: http://localhost:5001/api
+- Documentation: http://localhost:5001/api-docs (when running in development mode)
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+Main endpoints:
+- Authentication: `/api/auth/*`
+- Cars: `/api/cars/*`
+- Auctions: `/api/auctions/*`
+- Users: `/api/users/*`
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## Features
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- User authentication (login/register)
+- Real-time auction updates
+- Car listing management
+- Bidding system
+- Profile management
+- Image upload
+- Admin dashboard for managing cars and auctions
 
-## Congratulations! :tada:
+## Tech Stack
 
-You've successfully run and modified your React Native App. :partying_face:
+- **Frontend Mobile**: React Native
+- **Frontend Admin**: React
+- **Backend**: Node.js, Express
+- **Database**: MongoDB
+- **Real-time Updates**: Socket.IO
+- **State Management**: React Context
+- **Image Storage**: Local file system
+- **Authentication**: JWT
 
-### Now what?
+## Contributing
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+1. Create a new branch for your feature
+2. Make your changes
+3. Test thoroughly
+4. Submit a pull request
 
-# Troubleshooting
+## Support
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+For any issues or questions, please contact the development team.
 
-# Learn More
+## Database Migration
 
-To learn more about React Native, take a look at the following resources:
+### Exporting the Database
+To export your MongoDB database:
+```bash
+# Replace car-auction with your database name
+mongodump --db car-auction --out ./backup
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+# This will create a backup directory containing:
+# - car-auction/
+#   - users.bson
+#   - cars.bson
+#   - auctions.bson
+#   - etc...
+```
+
+### Importing the Database
+To import the database on another computer:
+```bash
+# First, copy the backup directory to the new computer
+# Then, run:
+mongorestore --db car-auction ./backup/car-auction
+```
+
+Note: Ensure MongoDB is installed and running on both computers before performing these operations.

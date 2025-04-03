@@ -43,14 +43,27 @@ const MyAuctionsScreen = ({ navigation }) => {
           endTime: auction.endTime || new Date().toISOString()
         }));
       
-      // Separate won and lost auctions based on isWinner flag
-      const won = processedAuctions.filter(auction => auction.isWinner);
-      const lost = processedAuctions.filter(auction => !auction.isWinner && auction.status === 'ended');
+      // Separate won and lost auctions
+      const won = processedAuctions.filter(auction => 
+        auction.status === 'ended' && auction.isWinner
+      );
+      
+      const lost = processedAuctions.filter(auction => 
+        auction.status === 'ended' && 
+        !auction.isWinner && 
+        auction.hasBid // Only show auctions where the user placed a bid
+      );
       
       // Sort by end date (most recent first)
       const sortByEndDate = (a, b) => new Date(b.endTime) - new Date(a.endTime);
       setWonAuctions(won.sort(sortByEndDate));
       setLostAuctions(lost.sort(sortByEndDate));
+      
+      console.log('Processed auctions:', {
+        total: processedAuctions.length,
+        won: won.length,
+        lost: lost.length
+      });
       
     } catch (error) {
       console.error('Error loading auctions:', error);
