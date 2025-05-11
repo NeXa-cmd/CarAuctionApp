@@ -1,0 +1,156 @@
+\chapter{Introduction}
+
+\section{Contexte et Motivation}
+
+Le marché des ventes de véhicules d'occasion connaît une transformation numérique significative, avec une demande croissante pour des plateformes permettant d'acheter et de vendre des véhicules en ligne. Cette évolution est d'autant plus marquée que les consommateurs recherchent aujourd'hui des expériences d'achat plus accessibles, transparentes et efficaces.
+
+Dans ce contexte, les systèmes d'enchères en ligne pour automobiles représentent une solution particulièrement adaptée, offrant un mécanisme de marché dynamique où la valeur des véhicules est déterminée collectivement par les acheteurs potentiels. Contrairement aux plateformes traditionnelles d'annonces automobiles, les systèmes d'enchères permettent une valorisation plus précise des véhicules et offrent une expérience interactive engageante pour les participants.
+
+Cependant, la mise en œuvre d'un tel système présente des défis techniques considérables, notamment en termes de gestion des transactions en temps réel, de sécurisation des échanges, et de conception d'interfaces utilisateur intuitives sur appareils mobiles. Ces défis constituent le point de départ de notre projet.
+
+\section{Problématique}
+
+Le développement d'une application d'enchères automobiles en temps réel soulève plusieurs questions essentielles:
+
+\begin{itemize}
+    \item Comment concevoir un système d'enchères qui garantit l'équité et la transparence pour tous les participants?
+    \item Quelles architectures techniques permettent de gérer efficacement la concurrence et le temps réel dans un contexte d'enchères?
+    \item Comment assurer une expérience utilisateur fluide et accessible sur plateformes mobiles, malgré les contraintes de connectivité et les variations de performances des appareils?
+    \item Quels mécanismes de sécurité mettre en place pour protéger les transactions et les données personnelles des utilisateurs?
+    \item Comment structurer l'application pour qu'elle puisse évoluer et s'adapter aux besoins futurs du marché?
+\end{itemize}
+
+Ces problématiques constituent le cœur de notre réflexion et ont guidé les choix techniques et fonctionnels tout au long du développement de l'application.
+
+\section{Objectifs du Projet}
+
+Dans le cadre de ce projet, nous nous sommes fixé plusieurs objectifs:
+
+\subsection{Objectifs Fonctionnels}
+
+\begin{itemize}
+    \item Développer une application mobile permettant aux utilisateurs de consulter et participer à des enchères automobiles
+    \item Mettre en place un système d'enchères en temps réel avec mise à jour instantanée des prix
+    \item Implémenter des mécanismes de notification pour informer les utilisateurs des événements importants (surenchère, fin d'enchère, etc.)
+    \item Créer un panneau d'administration pour la gestion des véhicules, des enchères et des utilisateurs
+    \item Assurer une présentation détaillée et attrayante des véhicules mis aux enchères
+\end{itemize}
+
+\subsection{Objectifs Techniques}
+
+\begin{itemize}
+    \item Concevoir une architecture évolutive et maintenable basée sur des technologies modernes
+    \item Implémenter des communications bidirectionnelles en temps réel entre clients et serveur
+    \item Garantir la sécurité et l'intégrité des données dans un environnement d'enchères concurrentiel
+    \item Optimiser les performances pour assurer une expérience fluide, même lors de pics d'activité
+    \item Développer une interface utilisateur réactive et intuitive sur plateformes iOS et Android
+\end{itemize}
+
+\subsection{Objectifs Pédagogiques}
+
+\begin{itemize}
+    \item Approfondir la maîtrise du développement d'applications mobiles avec React Native
+    \item Explorer les techniques de communication en temps réel avec Socket.io
+    \item Appliquer les principes de conception UML à un projet concret
+    \item Développer des compétences en architecture de systèmes distribués
+    \item Mettre en pratique les méthodes de gestion de projet agile
+\end{itemize}
+
+\section{Périmètre du Projet}
+
+\subsection{Fonctionnalités Couvertes}
+
+Le projet couvre les fonctionnalités suivantes:
+
+\begin{itemize}
+    \item Inscription et authentification des utilisateurs
+    \item Consultation des enchères en cours et à venir
+    \item Participation aux enchères avec mise à jour en temps réel
+    \item Système de notifications pour les événements importants
+    \item Gestion de profil utilisateur
+    \item Interface d'administration pour la gestion des enchères et des véhicules
+    \item Visualisation détaillée des véhicules avec galerie d'images
+    \item Historique des enchères et des transactions
+\end{itemize}
+
+\subsection{Limites et Exclusions}
+
+Le projet n'inclut pas:
+
+\begin{itemize}
+    \item Le traitement des paiements en ligne (prévu pour une version ultérieure)
+    \item L'intégration avec des services de vérification d'historique de véhicules
+    \item La gestion logistique de livraison des véhicules
+    \item Un système de messagerie instantanée entre acheteurs et vendeurs
+    \item Une version web desktop complète (focus sur applications mobiles)
+\end{itemize}
+
+\section{Méthodologie}
+
+\subsection{Approche de Développement}
+
+Le projet a été mené selon une approche agile, avec:
+
+\begin{itemize}
+    \item Des sprints de deux semaines
+    \item Des réunions quotidiennes pour synchroniser l'équipe
+    \item Des revues de sprint pour valider les fonctionnalités développées
+    \item Une amélioration continue basée sur les retours des tests utilisateurs
+\end{itemize}
+
+\subsection{Phases du Projet}
+
+Le projet s'est déroulé en plusieurs phases:
+
+\begin{enumerate}
+    \item \textbf{Analyse des besoins}: Identification des exigences fonctionnelles et techniques
+    \item \textbf{Conception}: Élaboration de l'architecture et modélisation UML
+    \item \textbf{Développement}: Implémentation itérative des fonctionnalités
+    \item \textbf{Tests}: Validation technique et fonctionnelle
+    \item \textbf{Déploiement}: Mise en production de l'application
+    \item \textbf{Maintenance}: Correction des bugs et améliorations continues
+\end{enumerate}
+
+\subsection{Outils de Gestion}
+
+Pour la gestion du projet, nous avons utilisé:
+
+\begin{itemize}
+    \item \textbf{Jira}: Suivi des tâches et des sprints
+    \item \textbf{GitHub}: Gestion de versions et revue de code
+    \item \textbf{Figma}: Conception des interfaces utilisateur
+    \item \textbf{Lucidchart}: Création des diagrammes UML
+    \item \textbf{Slack}: Communication d'équipe
+\end{itemize}
+
+\section{Structure du Rapport}
+
+Ce rapport est organisé en plusieurs chapitres qui couvrent l'ensemble du processus de développement:
+
+\begin{description}
+    \item[Chapitre 1-4] Introduction, remerciements et résumé.
+    \item[Chapitre 5] Introduction générale au projet.
+    \item[Chapitre 6] Présentation détaillée des technologies et outils utilisés.
+    \item[Chapitre 7] Manuel d'utilisation de l'application.
+    \item[Chapitre 8] Analyse des besoins et des exigences du système.
+    \item[Chapitre 9] Conception du système avec diagrammes UML.
+    \item[Chapitre 10] Implémentation technique et détails de réalisation.
+    \item[Chapitre 11] Défis d'implémentation et perspectives d'évolution.
+    \item[Chapitre 12] Conclusion et bilan du projet.
+\end{description}
+
+Chaque chapitre vise à présenter de manière claire et structurée les différents aspects du développement de notre application d'enchères automobiles, depuis l'analyse initiale jusqu'à la mise en production et aux perspectives futures.
+
+\section{Aperçu de l'Application}
+
+Notre application d'enchères automobiles se distingue par plusieurs caractéristiques clés:
+
+\begin{itemize}
+    \item Une interface utilisateur moderne et intuitive, optimisée pour les appareils mobiles
+    \item Un système d'enchères en temps réel permettant une expérience interactive
+    \item Une architecture technique robuste basée sur des technologies éprouvées
+    \item Une attention particulière à la sécurité et à la protection des données
+    \item Une conception évolutive permettant l'ajout futur de fonctionnalités
+\end{itemize}
+
+Ces caractéristiques constituent les fondements de notre solution et seront détaillées dans les chapitres suivants, accompagnées d'illustrations, de diagrammes et d'exemples de code. 

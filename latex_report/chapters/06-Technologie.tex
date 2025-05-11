@@ -1,0 +1,842 @@
+\chapter{Technologies et Outils Utilisés}
+
+\section{Vue d'Ensemble de la Stack Technologique}
+
+Le développement d'une application d'enchères automobiles en temps réel nécessite une pile technologique robuste et moderne, capable de gérer efficacement les communications bidirectionnelles, le traitement des données et l'expérience utilisateur. Notre choix s'est porté sur un ensemble de technologies complémentaires formant un écosystème cohérent.
+
+\subsection{Architecture Globale}
+
+L'architecture technique du système repose sur quatre composants principaux:
+
+\begin{itemize}
+    \item \textbf{Frontend Mobile}: Interface utilisateur développée avec React Native
+    \item \textbf{Backend API}: Serveur RESTful développé avec Node.js et Express
+    \item \textbf{Communication Temps Réel}: Implémentée avec Socket.io
+    \item \textbf{Base de Données}: MongoDB pour le stockage persistant des données
+\end{itemize}
+
+Cette architecture permet une séparation claire des responsabilités tout en assurant une communication fluide entre les différentes couches du système.
+
+\section{Technologies Frontend}
+
+\subsection{React Native}
+
+React Native constitue le choix central pour le développement de l'interface utilisateur mobile. Cette technologie présente plusieurs avantages décisifs:
+
+\begin{itemize}
+    \item \textbf{Développement multiplateforme}: Une base de code unique déployable sur iOS et Android
+    \item \textbf{Performances natives}: Rendu d'interfaces utilisateur natives, offrant des performances proches des applications développées en code natif
+    \item \textbf{Architecture à composants}: Organisation modulaire du code favorisant la réutilisation et la maintenance
+    \item \textbf{Hot Reloading}: Cycle de développement accéléré grâce au rechargement à chaud
+    \item \textbf{Écosystème riche}: Large éventail de bibliothèques tierces disponibles
+\end{itemize}
+
+\subsubsection{Composants React Native Principaux}
+L'application utilise intensivement les composants React Native suivants:
+
+\begin{verbatim}
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+  Alert
+} from 'react-native';
+\end{verbatim}
+
+\subsection{React Navigation}
+
+La navigation entre les écrans est gérée par React Navigation, qui offre:
+
+\begin{itemize}
+    \item Une navigation fluide et performante entre les écrans
+    \item La gestion de l'historique de navigation
+    \item Différents types de navigateurs (stack, tab, drawer)
+    \item Une intégration profonde avec les gestes natifs
+\end{itemize}
+
+\begin{verbatim}
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+// Configuration de base de la navigation
+function AppNavigator() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ 
+            title: 'Accueil',
+            headerStyle: styles.header
+          }}
+        />
+        <Stack.Screen name="AuctionDetail" component={AuctionDetailScreen} />
+        {/* Autres écrans... */}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+\end{verbatim}
+
+\subsection{Gestion de l'État}
+
+La gestion de l'état de l'application utilise plusieurs approches complémentaires:
+
+\begin{itemize}
+    \item \textbf{Hooks React}: useState et useEffect pour l'état local des composants
+    \item \textbf{Context API}: Pour le partage d'état entre composants proches
+    \item \textbf{AsyncStorage}: Pour la persistance locale des données comme les tokens d'authentification
+\end{itemize}
+
+\begin{verbatim}
+// Exemple d'utilisation du Context API pour l'authentification
+const AuthContext = React.createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  // Vérification du token au démarrage
+  useEffect(() => {
+    const loadUserFromStorage = async () => {
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        if (token) {
+          const userData = await authService.getUserData(token);
+          setUser(userData);
+        }
+      } catch (error) {
+        console.log('Failed to load user:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadUserFromStorage();
+  }, []);
+  
+  // Fonctions d'authentification
+  const login = async (email, password) => {
+    setLoading(true);
+    try {
+      const response = await authService.login(email, password);
+      await AsyncStorage.setItem('userToken', response.token);
+      setUser(response.user);
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.message };
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const logout = async () => {
+    await AsyncStorage.removeItem('userToken');
+    setUser(null);
+  };
+  
+  // Valeur fournie par le contexte
+  const authContextValue = {
+    user,
+    loading,
+    login,
+    logout,
+    isAuthenticated: !!user
+  };
+  
+  return (
+    <AuthContext.Provider value={authContextValue}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+\end{verbatim}
+
+\subsection{Bibliothèques UI Complémentaires}
+
+Pour enrichir l'interface utilisateur, plusieurs bibliothèques complémentaires sont utilisées:
+
+\begin{itemize}
+    \item \textbf{React Native Elements}: Composants UI pré-stylisés et personnalisables
+    \item \textbf{React Native Vector Icons}: Collection d'icônes vectorielles
+    \item \textbf{React Native Gesture Handler}: Gestion avancée des gestes tactiles
+    \item \textbf{React Native Reanimated}: Animations fluides et performantes
+\end{itemize}
+
+\section{Technologies Backend}
+
+\subsection{Node.js et Express}
+
+Le backend est développé avec Node.js et Express, offrant:
+
+\begin{itemize}
+    \item \textbf{Architecture événementielle non-bloquante}: Idéale pour les applications en temps réel
+    \item \textbf{Performance}: Traitement efficace des requêtes simultanées
+    \item \textbf{Ecosystème npm}: Accès à un vaste répertoire de packages
+    \item \textbf{JavaScript full-stack}: Uniformité du langage entre frontend et backend
+\end{itemize}
+
+\begin{verbatim}
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const morgan = require('morgan');
+const helmet = require('helmet');
+
+// Middleware de base
+app.use(cors());
+app.use(express.json());
+app.use(morgan('dev'));
+app.use(helmet());
+
+// Routes API
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/auctions', require('./routes/auctionRoutes'));
+app.use('/api/cars', require('./routes/carRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+
+// Middleware de gestion d'erreurs
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    message: 'Une erreur est survenue',
+    error: process.env.NODE_ENV === 'production' ? {} : err
+  });
+});
+
+// Démarrage du serveur
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+\end{verbatim}
+
+\subsection{Architecture API RESTful}
+
+L'API backend suit les principes REST avec:
+
+\begin{itemize}
+    \item Organisation des endpoints par ressources
+    \item Utilisation appropriée des méthodes HTTP (GET, POST, PUT, DELETE)
+    \item Réponses structurées avec codes HTTP standards
+    \item Pagination des résultats pour les listes volumineuses
+\end{itemize}
+
+\begin{verbatim}
+// Exemple de contrôleur RESTful pour les enchères
+const auctionController = {
+  // GET /api/auctions
+  getAll: async (req, res) => {
+    try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const skip = (page - 1) * limit;
+      
+      const auctions = await Auction.find()
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .populate('car', 'brand model year images');
+      
+      const total = await Auction.countDocuments();
+      
+      res.json({
+        data: auctions,
+        meta: {
+          total,
+          page,
+          lastPage: Math.ceil(total / limit)
+        }
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  
+  // GET /api/auctions/:id
+  getById: async (req, res) => {
+    try {
+      const auction = await Auction.findById(req.params.id)
+        .populate('car')
+        .populate({
+          path: 'bids',
+          options: { sort: { amount: -1 } },
+          populate: { path: 'user', select: 'username profileImage' }
+        });
+      
+      if (!auction) {
+        return res.status(404).json({ message: 'Enchère non trouvée' });
+      }
+      
+      res.json(auction);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  
+  // Autres méthodes...
+};
+\end{verbatim}
+
+\subsection{Sécurité}
+
+La sécurité du backend est assurée par plusieurs mécanismes:
+
+\begin{itemize}
+    \item \textbf{JSON Web Tokens (JWT)}: Pour l'authentification sécurisée
+    \item \textbf{bcrypt}: Pour le hachage sécurisé des mots de passe
+    \item \textbf{Helmet}: Protection contre les vulnérabilités web courantes
+    \item \textbf{express-rate-limit}: Limitation du nombre de requêtes pour prévenir les attaques par force brute
+    \item \textbf{express-validator}: Validation des entrées utilisateur
+\end{itemize}
+
+\begin{verbatim}
+// Middleware d'authentification
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const auth = async (req, res, next) => {
+  try {
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findOne({ 
+      _id: decoded.id,
+      'tokens.token': token 
+    });
+    
+    if (!user) {
+      throw new Error();
+    }
+    
+    req.token = token;
+    req.user = user;
+    next();
+  } catch (error) {
+    res.status(401).json({ message: 'Veuillez vous authentifier' });
+  }
+};
+\end{verbatim}
+
+\section{Communication Temps Réel avec Socket.io}
+
+\subsection{Principes de Fonctionnement}
+
+Socket.io est utilisé pour établir une communication bidirectionnelle en temps réel entre le client et le serveur, permettant:
+
+\begin{itemize}
+    \item Mise à jour instantanée des enchères
+    \item Notifications en temps réel
+    \item Actualisation du statut des enchères sans rechargement
+    \item Support de la reconnexion automatique
+\end{itemize}
+
+\begin{verbatim}
+// Configuration Socket.io côté serveur
+const http = require('http');
+const socketIo = require('socket.io');
+const jwt = require('jsonwebtoken');
+
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+});
+
+// Middleware d'authentification Socket.io
+io.use((socket, next) => {
+  if (socket.handshake.query && socket.handshake.query.token) {
+    const token = socket.handshake.query.token;
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) return next(new Error('Authentication error'));
+      socket.decoded = decoded;
+      next();
+    });
+  } else {
+    next(new Error('Authentication error'));
+  }
+});
+
+// Gestion des événements Socket.io
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.decoded.id);
+  
+  // Rejoindre une salle d'enchère spécifique
+  socket.on('join_auction', (auctionId) => {
+    socket.join(`auction_${auctionId}`);
+    console.log(`User joined auction: ${auctionId}`);
+  });
+  
+  // Soumettre une enchère
+  socket.on('place_bid', async (data) => {
+    try {
+      const { auctionId, amount } = data;
+      const userId = socket.decoded.id;
+      
+      // Traitement de l'enchère via le service
+      const result = await auctionService.placeBid(auctionId, userId, amount);
+      
+      if (result.success) {
+        // Diffuser la mise à jour à tous les participants
+        io.to(`auction_${auctionId}`).emit('bid_update', {
+          auctionId,
+          newPrice: result.data.amount,
+          bidder: result.data.bidderName,
+          timestamp: new Date()
+        });
+        
+        // Notifier l'enchérisseur précédent
+        if (result.data.previousBidder) {
+          io.to(`user_${result.data.previousBidder}`).emit('outbid', {
+            auctionId,
+            carName: result.data.carName
+          });
+        }
+      } else {
+        // Informer l'utilisateur de l'échec
+        socket.emit('bid_error', {
+          auctionId,
+          message: result.message
+        });
+      }
+    } catch (error) {
+      socket.emit('error', { message: error.message });
+    }
+  });
+  
+  // Quitter une salle d'enchère
+  socket.on('leave_auction', (auctionId) => {
+    socket.leave(`auction_${auctionId}`);
+  });
+  
+  // Connecter l'utilisateur à sa salle personnelle pour les notifications
+  socket.join(`user_${socket.decoded.id}`);
+  
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.decoded.id);
+  });
+});
+\end{verbatim}
+
+\subsection{Intégration Côté Client}
+
+L'intégration de Socket.io côté client est réalisée comme suit:
+
+\begin{verbatim}
+// Service Socket.io Frontend
+import io from 'socket.io-client';
+import { API_URL } from '../config';
+
+class SocketService {
+  constructor() {
+    this.socket = null;
+    this.listeners = {};
+  }
+  
+  initialize(token) {
+    if (this.socket) {
+      this.disconnect();
+    }
+    
+    this.socket = io(API_URL, {
+      query: { token },
+      transports: ['websocket'],
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000
+    });
+    
+    this.socket.on('connect', () => {
+      console.log('Socket connected');
+    });
+    
+    this.socket.on('connect_error', (error) => {
+      console.error('Socket connection error:', error);
+    });
+    
+    this.socket.on('error', (error) => {
+      console.error('Socket error:', error);
+    });
+    
+    // Réattacher les écouteurs après reconnexion
+    this.socket.on('reconnect', () => {
+      console.log('Socket reconnected');
+      Object.keys(this.listeners).forEach(event => {
+        this.listeners[event].forEach(callback => {
+          this.socket.on(event, callback);
+        });
+      });
+    });
+  }
+  
+  disconnect() {
+    if (this.socket) {
+      this.socket.disconnect();
+      this.socket = null;
+    }
+  }
+  
+  // Rejoindre une salle d'enchère
+  joinAuction(auctionId) {
+    if (this.socket) {
+      this.socket.emit('join_auction', auctionId);
+    }
+  }
+  
+  // Quitter une salle d'enchère
+  leaveAuction(auctionId) {
+    if (this.socket) {
+      this.socket.emit('leave_auction', auctionId);
+    }
+  }
+  
+  // Placer une enchère
+  placeBid(auctionId, amount) {
+    if (this.socket) {
+      this.socket.emit('place_bid', { auctionId, amount });
+    }
+  }
+  
+  // Gestion des écouteurs d'événements
+  on(event, callback) {
+    if (this.socket) {
+      this.socket.on(event, callback);
+      
+      // Enregistrer l'écouteur pour réattachement après reconnexion
+      if (!this.listeners[event]) {
+        this.listeners[event] = [];
+      }
+      this.listeners[event].push(callback);
+    }
+  }
+  
+  off(event, callback) {
+    if (this.socket) {
+      this.socket.off(event, callback);
+      
+      // Nettoyer l'écouteur de la liste
+      if (this.listeners[event]) {
+        this.listeners[event] = this.listeners[event]
+          .filter(cb => cb !== callback);
+      }
+    }
+  }
+}
+
+export default new SocketService();
+\end{verbatim}
+
+\section{Base de Données MongoDB}
+
+\subsection{Choix de MongoDB}
+
+MongoDB a été sélectionné comme système de gestion de base de données pour plusieurs raisons:
+
+\begin{itemize}
+    \item \textbf{Schéma flexible}: Adapté à l'évolution des modèles de données
+    \item \textbf{Format JSON natif}: Compatibilité naturelle avec JavaScript
+    \item \textbf{Performances}: Bonnes performances en lecture et écriture
+    \item \textbf{Scalabilité}: Facilité de mise à l'échelle horizontale
+    \item \textbf{Support des requêtes géospatiales}: Utile pour les recherches basées sur la localisation
+\end{itemize}
+
+\subsection{Modélisation des Données}
+
+La modélisation des données avec Mongoose (ODM pour MongoDB) s'articule autour de plusieurs schémas principaux:
+
+\begin{verbatim}
+// Schéma Utilisateur
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    validate: {
+      validator: function(v) {
+        return /^\S+@\S+\.\S+$/.test(v);
+      },
+      message: props => `${props.value} n'est pas un email valide!`
+    }
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8
+  },
+  profileImage: String,
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  lastLogin: Date,
+  tokens: [{
+    token: {
+      type: String,
+      required: true
+    }
+  }]
+}, {
+  timestamps: true
+});
+
+// Schéma Voiture
+const carSchema = new mongoose.Schema({
+  brand: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  model: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  year: {
+    type: Number,
+    required: true
+  },
+  mileage: {
+    type: Number,
+    required: true
+  },
+  color: String,
+  fuel: {
+    type: String,
+    enum: ['essence', 'diesel', 'électrique', 'hybride', 'gpl']
+  },
+  transmission: {
+    type: String,
+    enum: ['manuelle', 'automatique']
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  condition: {
+    type: String,
+    enum: ['neuf', 'excellent', 'bon', 'moyen', 'à restaurer']
+  },
+  images: [String],
+  features: [String],
+  addedAt: {
+    type: Date,
+    default: Date.now
+  }
+}, {
+  timestamps: true
+});
+
+// Schéma Enchère
+const auctionSchema = new mongoose.Schema({
+  car: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Car',
+    required: true
+  },
+  startPrice: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  currentPrice: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  minIncrement: {
+    type: Number,
+    required: true,
+    default: 100,
+    min: 1
+  },
+  startTime: {
+    type: Date,
+    required: true
+  },
+  endTime: {
+    type: Date,
+    required: true,
+    validate: {
+      validator: function(v) {
+        return v > this.startTime;
+      },
+      message: 'La date de fin doit être postérieure à la date de début!'
+    }
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'active', 'ended', 'cancelled'],
+    default: 'pending'
+  },
+  winner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  bids: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Bid'
+  }],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
+}, {
+  timestamps: true
+});
+
+// Schéma Offre
+const bidSchema = new mongoose.Schema({
+  auction: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Auction',
+    required: true
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  amount: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now
+  }
+}, {
+  timestamps: true
+});
+\end{verbatim}
+
+\subsection{Optimisation des Performances}
+
+Pour optimiser les performances de la base de données, plusieurs stratégies ont été mises en œuvre:
+
+\begin{itemize}
+    \item \textbf{Indexation}: Création d'index sur les champs fréquemment recherchés
+    \item \textbf{Dénormalisation contrôlée}: Stockage de données redondantes stratégiques pour réduire les jointures
+    \item \textbf{Pagination}: Limitation du nombre de résultats par requête
+    \item \textbf{Projection}: Sélection des champs nécessaires uniquement
+\end{itemize}
+
+\begin{verbatim}
+// Ajout d'index pour optimiser les requêtes
+userSchema.index({ username: 1 });
+userSchema.index({ email: 1 });
+carSchema.index({ brand: 1, model: 1 });
+carSchema.index({ year: -1 });
+auctionSchema.index({ status: 1 });
+auctionSchema.index({ endTime: 1 });
+auctionSchema.index({ car: 1 });
+bidSchema.index({ auction: 1, amount: -1 });
+bidSchema.index({ user: 1 });
+\end{verbatim}
+
+\section{Outils de Développement et Déploiement}
+
+\subsection{Environnement de Développement}
+
+Le développement s'appuie sur plusieurs outils:
+
+\begin{itemize}
+    \item \textbf{Git}: Contrôle de version distribuée
+    \item \textbf{ESLint}: Analyse statique du code JavaScript
+    \item \textbf{Prettier}: Formatage automatique du code
+    \item \textbf{Jest}: Framework de tests pour JavaScript
+    \item \textbf{Postman}: Tests d'API REST
+    \item \textbf{React Native Debugger}: Débogage de l'application React Native
+\end{itemize}
+
+\subsection{CI/CD et Déploiement}
+
+Le pipeline d'intégration continue et de déploiement continu utilise:
+
+\begin{itemize}
+    \item \textbf{GitHub Actions}: Automatisation des workflows de CI/CD
+    \item \textbf{Docker}: Conteneurisation des applications
+    \item \textbf{Kubernetes}: Orchestration des conteneurs
+    \item \textbf{MongoDB Atlas}: Base de données MongoDB gérée
+    \item \textbf{AWS/Google Cloud}: Infrastructure cloud
+\end{itemize}
+
+\subsection{Monitoring et Logging}
+
+La surveillance de l'application en production s'appuie sur:
+
+\begin{itemize}
+    \item \textbf{New Relic}: Monitoring des performances applicatives
+    \item \textbf{Sentry}: Suivi des erreurs en temps réel
+    \item \textbf{ELK Stack}: Collecte et analyse des logs
+    \item \textbf{Prometheus}: Métriques système et applicatives
+    \item \textbf{Grafana}: Visualisation des métriques de performance
+\end{itemize}
+
+\section{Choix Technologiques et Alternatives}
+
+\subsection{Justification des Choix}
+
+Les choix technologiques ont été guidés par plusieurs critères:
+
+\begin{itemize}
+    \item \textbf{Performance}: Capacité à gérer efficacement les communications en temps réel
+    \item \textbf{Évolutivité}: Facilité d'adaptation à l'évolution des besoins
+    \item \textbf{Maturité}: Technologies éprouvées avec communautés actives
+    \item \textbf{Cohérence}: Écosystème JavaScript homogène (Node.js, React Native)
+    \item \textbf{Productivité}: Outils et frameworks accélérant le développement
+\end{itemize}
+
+\subsection{Alternatives Considérées}
+
+Plusieurs alternatives ont été évaluées avant la sélection finale:
+
+\begin{itemize}
+    \item \textbf{Frontend}: Flutter vs React Native
+    \item \textbf{Backend}: Django/Python vs Node.js/Express
+    \item \textbf{Base de données}: PostgreSQL vs MongoDB
+    \item \textbf{Temps réel}: Firebase Realtime Database vs Socket.io
+\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Domaine} & \textbf{Solution retenue} & \textbf{Alternative} & \textbf{Raison du choix} \\
+\hline
+Frontend mobile & React Native & Flutter & Expertise équipe, écosystème JS \\
+\hline
+Backend & Node.js/Express & Django/Python & Performances temps réel, cohérence JS \\
+\hline
+Base de données & MongoDB & PostgreSQL & Flexibilité du schéma, scaling horizontal \\
+\hline
+Communication & Socket.io & Firebase & Contrôle fin, coûts prévisibles \\
+\hline
+\end{tabular}
+\caption{Comparaison des technologies considérées}
+\label{table:tech-comparison}
+\end{table} 

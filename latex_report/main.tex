@@ -1,0 +1,172 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+\documentclass[a4paper,12pt]{report}
+
+% Basic packages
+% \usepackage[utf8]{inputenc}  % Not needed with XeLaTeX
+% \usepackage[T1]{fontenc}     % Not needed with XeLaTeX
+\usepackage{fontspec}          % Required for XeLaTeX
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{url}
+\usepackage{tabularx}
+\usepackage{setspace}
+
+% Page geometry - reduced margins to save space
+\geometry{top=2cm,bottom=2cm,right=2cm,left=2cm,headheight=15.5pt}
+
+% Reduce spacing between paragraphs and lists
+\setlength{\parskip}{0.5ex plus 0.1ex minus 0.1ex}
+\setlength{\parindent}{1em}
+
+% Make lists more compact
+\setlist{noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt}
+
+% Reduce caption spacing
+\captionsetup{font=small,skip=3pt}
+
+% Reduce table row height
+\renewcommand{\arraystretch}{0.9}
+
+% Graphics path
+\graphicspath{{images/}{images_pfe/}{screenshots/}}
+
+% JavaScript language definition for listings
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with, let, const, class, export, import, from, async, await},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  morestring=[b]`
+}
+
+% Code listings setup
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.95}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Custom header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{Système d'Enchères Automobiles}
+
+% Customize chapter style - reduced spacing
+\titleformat{\chapter}[display]
+  {\normalfont\Large\bfseries}
+  {\chaptertitlename\ \thechapter}{15pt}{\Large}
+\titlespacing*{\chapter}{0pt}{30pt}{20pt}
+
+% Make sections more compact
+\titleformat{\section}
+  {\normalfont\large\bfseries}
+  {\thesection}{0.5em}{}
+\titlespacing*{\section}{0pt}{2.0ex plus 0.5ex minus 0.1ex}{1.0ex plus 0.1ex}
+
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{1.5ex plus 0.5ex minus 0.1ex}{0.8ex plus 0.1ex}
+
+% Bibliography setup
+\usepackage[
+    backend=biber,
+    style=numeric,
+    sorting=ynt
+]{biblatex}
+\addbibresource{references/references.bib}
+
+% Make sure hyperref is loaded last
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={Système d'Enchères Automobiles},
+    pdfauthor={Auteur},
+    pdfkeywords={enchères, automobile, application mobile, temps réel},
+    pdfcreator={LaTeX},
+    pdfproducer={XeLaTeX}
+}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    {\Huge\bfseries Système d'Enchères Automobiles\par}
+    \vspace{1.5cm}
+    {\Large Conception et Implémentation d'une Application Mobile en Temps Réel\par}
+    \vspace{2cm}
+    {\Large Rapport de Projet\par}
+    \vspace{3cm}
+    {\Large\itshape Auteur\par}
+    \vspace{3cm}
+    {\large \today\par}
+\end{titlepage}
+
+\pagenumbering{Roman}
+
+\include{chapters/01-Dedicace}
+\include{chapters/02-Remerciements}
+\include{chapters/03-Resume}
+
+\tableofcontents
+\listoffigures
+\listoftables
+\clearpage
+
+\pagenumbering{arabic}
+
+\include{chapters/05-Introduction}
+\include{chapters/06-Art}
+\include{chapters/06-Technologie}
+\include{chapters/07-Manuel-Utilisateur}
+\include{chapters/07-Existant}
+\include{chapters/08-Besoins}
+\include{chapters/09-Conception}
+\include{chapters/10-Realisation}
+\include{chapters/11-Implementation-Challenges}
+\include{chapters/12-Conclusion}
+\include{chapters/12-Annexe}
+
+% Print bibliography
+\printbibliography[heading=bibintoc, title={Bibliographie}]
+
+\end{document} 

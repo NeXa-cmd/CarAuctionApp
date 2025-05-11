@@ -1,0 +1,486 @@
+\chapter{Réalisation Technique}
+
+\section{Implémentation Frontend}
+
+\subsection{Structure de l'Application Mobile}
+L'application mobile représente l'interface principale par laquelle les utilisateurs interagissent avec le système d'enchères. Développée avec React Native, elle offre une expérience native sur les plateformes iOS et Android à partir d'une base de code unique.
+
+\subsubsection{Organisation des Écrans}
+L'application est structurée autour de plusieurs écrans principaux:
+
+\begin{itemize}
+    \item \textbf{AuthenticationScreen}: Gère l'inscription et la connexion des utilisateurs
+    \item \textbf{AuctionListScreen}: Affiche la liste des enchères disponibles
+    \item \textbf{AuctionDetailScreen}: Présente les détails d'une enchère spécifique
+    \item \textbf{BiddingScreen}: Interface pour placer des enchères
+    \item \textbf{ProfileScreen}: Gestion du profil utilisateur
+    \item \textbf{MyAuctionsScreen}: Historique des enchères de l'utilisateur
+\end{itemize}
+
+\subsubsection{Navigation}
+La navigation est gérée via React Navigation, permettant une expérience fluide entre les différents écrans:
+
+\begin{verbatim}
+const Stack = createStackNavigator();
+
+function AppNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="AuctionDetail" component={AuctionDetailScreen} />
+      <Stack.Screen name="Bidding" component={BiddingScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="MyAuctions" component={MyAuctionsScreen} />
+    </Stack.Navigator>
+  );
+}
+\end{verbatim}
+
+\subsection{Composants Réutilisables}
+Pour maintenir la cohérence de l'interface et optimiser le développement, plusieurs composants réutilisables ont été créés:
+
+\begin{verbatim}
+// Exemple de composant réutilisable pour les enchères
+const AuctionCard = ({ auction, onPress }) => (
+  <TouchableOpacity 
+    style={styles.card} 
+    onPress={() => onPress(auction.id)}
+  >
+    <Image
+      source={{ uri: auction.car.images[0] }}
+      style={styles.carImage}
+    />
+    <View style={styles.infoContainer}>
+      <Text style={styles.title}>
+        {auction.car.brand} {auction.car.model}
+      </Text>
+      <Text style={styles.price}>
+        Prix actuel: {auction.currentPrice} €
+      </Text>
+      <Text style={styles.time}>
+        Fin: {formatDate(auction.endTime)}
+      </Text>
+    </View>
+  </TouchableOpacity>
+);
+\end{verbatim}
+
+\subsection{Gestion du State}
+La gestion de l'état de l'application utilise les hooks React pour les composants locaux et un système centralisé pour l'état global:
+
+\begin{verbatim}
+// Exemple d'utilisation des hooks dans un écran d'enchère
+function AuctionDetailScreen({ route }) {
+  const { auctionId } = route.params;
+  const [auction, setAuction] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [bidAmount, setBidAmount] = useState('');
+  
+  useEffect(() => {
+    const fetchAuction = async () => {
+      try {
+        const data = await AuctionService.getAuctionById(auctionId);
+        setAuction(data);
+      } catch (error) {
+        console.error('Error fetching auction:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchAuction();
+    
+    // Configuration Socket.io pour les mises à jour en temps réel
+    socket.on('auction_update', (updatedAuction) => {
+      if (updatedAuction.id === auctionId) {
+        setAuction(updatedAuction);
+      }
+    });
+    
+    return () => {
+      socket.off('auction_update');
+    };
+  }, [auctionId]);
+  
+  // Reste de la logique du composant...
+}
+\end{verbatim}
+
+\subsection{Communication Temps Réel}
+L'intégration de Socket.io au frontend permet de recevoir des mises à jour en temps réel des enchères:
+
+\begin{verbatim}
+// Service Socket.io
+const initializeSocket = (userId) => {
+  socket = io(API_URL);
+  
+  socket.on('connect', () => {
+    console.log('Connected to Socket.io');
+    socket.emit('user_connected', { userId });
+  });
+  
+  socket.on('new_bid', (data) => {
+    // Mise à jour de l'interface en temps réel
+    notifyBidUpdate(data);
+  });
+  
+  socket.on('auction_ended', (data) => {
+    // Notification de fin d'enchère
+    notifyAuctionEnded(data);
+  });
+  
+  return socket;
+};
+\end{verbatim}
+
+\section{Implémentation Backend}
+
+\subsection{Architecture API}
+Le backend est implémenté en utilisant Node.js et Express.js, suivant une architecture RESTful pour exposer les points d'entrée API:
+
+\begin{verbatim}
+// Configuration principale Express
+const express = require('express');
+const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/auctions', auctionRoutes);
+app.use('/api/cars', carRoutes);
+app.use('/api/users', userRoutes);
+
+// Gestion Socket.io
+io.on('connection', (socket) => {
+  console.log('New client connected');
+  
+  socket.on('join_auction', (auctionId) => {
+    socket.join(`auction_${auctionId}`);
+  });
+  
+  socket.on('place_bid', async (data) => {
+    // Traitement de l'enchère
+    const result = await auctionService.placeBid(data);
+    
+    if (result.success) {
+      io.to(`auction_${data.auctionId}`).emit('bid_update', result.data);
+    }
+  });
+});
+
+// Démarrage du serveur
+mongoose.connect(DB_URI)
+  .then(() => {
+    console.log('Connected to MongoDB');
+    http.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  });
+\end{verbatim}
+
+\subsection{Contrôleurs}
+Les contrôleurs implémentent la logique métier principale:
+
+\begin{verbatim}
+// Contrôleur d'enchères
+const auctionController = {
+  // Récupérer toutes les enchères actives
+  getAllActive: async (req, res) => {
+    try {
+      const auctions = await Auction.find({ status: 'active' })
+        .populate('car')
+        .sort({ endTime: 1 });
+      
+      res.json(auctions);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  
+  // Récupérer une enchère par son ID
+  getById: async (req, res) => {
+    try {
+      const auction = await Auction.findById(req.params.id)
+        .populate('car')
+        .populate({
+          path: 'bids',
+          populate: { path: 'user', select: 'username' }
+        });
+      
+      if (!auction) {
+        return res.status(404).json({ message: 'Enchère non trouvée' });
+      }
+      
+      res.json(auction);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  
+  // Placer une enchère
+  placeBid: async (req, res) => {
+    try {
+      const { auctionId, amount } = req.body;
+      const userId = req.user.id;
+      
+      const result = await auctionService.placeBid({
+        auctionId,
+        userId,
+        amount
+      });
+      
+      if (result.success) {
+        res.json(result.data);
+      } else {
+        res.status(400).json({ message: result.message });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+};
+\end{verbatim}
+
+\subsection{Middleware}
+Les middleware gèrent l'authentification et la validation:
+
+\begin{verbatim}
+// Middleware d'authentification
+const authMiddleware = async (req, res, next) => {
+  try {
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    
+    if (!user) {
+      throw new Error();
+    }
+    
+    req.token = token;
+    req.user = user;
+    next();
+  } catch (error) {
+    res.status(401).json({ message: 'Veuillez vous authentifier' });
+  }
+};
+\end{verbatim}
+
+\subsection{Services}
+Les services encapsulent la logique réutilisable entre différents contrôleurs:
+
+\begin{verbatim}
+// Service d'enchères
+const auctionService = {
+  // Placer une enchère
+  placeBid: async ({ auctionId, userId, amount }) => {
+    // Validation des entrées
+    if (!mongoose.Types.ObjectId.isValid(auctionId)) {
+      return { success: false, message: 'ID d\'enchère invalide' };
+    }
+    
+    const amountNum = parseFloat(amount);
+    if (isNaN(amountNum)) {
+      return { success: false, message: 'Montant invalide' };
+    }
+    
+    // Début de transaction
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    
+    try {
+      // Récupérer l'enchère avec verrouillage
+      const auction = await Auction.findById(auctionId).session(session);
+      
+      if (!auction) {
+        throw new Error('Enchère non trouvée');
+      }
+      
+      if (auction.status !== 'active') {
+        throw new Error('L\'enchère n\'est plus active');
+      }
+      
+      if (auction.endTime < new Date()) {
+        throw new Error('L\'enchère est terminée');
+      }
+      
+      if (amountNum <= auction.currentPrice) {
+        throw new Error('Le montant doit être supérieur au prix actuel');
+      }
+      
+      // Créer la nouvelle enchère
+      const bid = new Bid({
+        auction: auctionId,
+        user: userId,
+        amount: amountNum,
+        createdAt: new Date()
+      });
+      
+      await bid.save({ session });
+      
+      // Mettre à jour l'enchère
+      auction.currentPrice = amountNum;
+      auction.bids.push(bid._id);
+      await auction.save({ session });
+      
+      // Valider la transaction
+      await session.commitTransaction();
+      
+      // Populer les données pour la réponse
+      const populatedBid = await Bid.findById(bid._id)
+        .populate('user', 'username')
+        .lean();
+      
+      return {
+        success: true,
+        data: {
+          bid: populatedBid,
+          newPrice: amountNum,
+          auctionId
+        }
+      };
+    } catch (error) {
+      // Annuler la transaction en cas d'erreur
+      await session.abortTransaction();
+      return { success: false, message: error.message };
+    } finally {
+      session.endSession();
+    }
+  },
+  
+  // Vérifier et mettre à jour les enchères terminées
+  checkEndedAuctions: async () => {
+    const now = new Date();
+    
+    const endedAuctions = await Auction.find({
+      status: 'active',
+      endTime: { $lte: now }
+    });
+    
+    for (const auction of endedAuctions) {
+      // Trouver le gagnant
+      if (auction.bids.length > 0) {
+        const highestBid = await Bid.findOne({ auction: auction._id })
+          .sort({ amount: -1 })
+          .populate('user');
+        
+        if (highestBid) {
+          auction.winner = highestBid.user._id;
+        }
+      }
+      
+      auction.status = 'ended';
+      await auction.save();
+      
+      // Émettre un événement de fin d'enchère
+      io.to(`auction_${auction._id}`).emit('auction_ended', {
+        auctionId: auction._id,
+        winner: auction.winner
+      });
+    }
+    
+    return endedAuctions;
+  }
+};
+\end{verbatim}
+
+\section{Intégration et Tests}
+
+\subsection{Tests Unitaires}
+Les tests unitaires couvrent les fonctionnalités critiques du système:
+
+\begin{verbatim}
+// Test du service d'enchères
+describe('Auction Service Tests', () => {
+  test('Devrait rejeter une enchère inférieure au prix actuel', async () => {
+    // Configuration du test
+    const auctionId = new mongoose.Types.ObjectId();
+    const userId = new mongoose.Types.ObjectId();
+    
+    // Mock de l'enchère
+    jest.spyOn(Auction, 'findById').mockResolvedValue({
+      _id: auctionId,
+      currentPrice: 1000,
+      status: 'active',
+      endTime: new Date(Date.now() + 3600000), // +1 heure
+      bids: [],
+      save: jest.fn().mockResolvedValue(true)
+    });
+    
+    // Exécution du test
+    const result = await auctionService.placeBid({
+      auctionId,
+      userId,
+      amount: 900 // Inférieur au prix actuel
+    });
+    
+    // Vérification des résultats
+    expect(result.success).toBe(false);
+    expect(result.message).toContain('supérieur au prix actuel');
+  });
+});
+\end{verbatim}
+
+\subsection{Déploiement}
+L'application est déployée à l'aide d'une infrastructure cloud garantissant haute disponibilité et scalabilité:
+
+\begin{itemize}
+    \item \textbf{Frontend}: Déployé via les app stores (Google Play et App Store)
+    \item \textbf{Backend}: Conteneurisé avec Docker et déployé sur une plateforme Kubernetes
+    \item \textbf{Base de données}: MongoDB Atlas pour une solution gérée et scalable
+    \item \textbf{Monitoring}: Intégration de solutions de monitoring pour surveiller les performances et la disponibilité
+\end{itemize}
+
+\subsection{Sécurité}
+Plusieurs mesures de sécurité ont été implémentées:
+
+\begin{itemize}
+    \item Stockage sécurisé des mots de passe avec bcrypt
+    \item Protection contre les attaques par injection via la validation des entrées
+    \item Authentification basée sur les tokens JWT
+    \item Gestion sécurisée des sessions
+    \item Protection contre les attaques CSRF
+    \item Configuration HTTPS pour toutes les communications
+\end{itemize}
+
+\section{Défis Techniques et Solutions}
+
+\subsection{Concurrence dans les Enchères}
+Un défi majeur était de gérer la concurrence lorsque plusieurs utilisateurs placent des enchères simultanément:
+
+\begin{itemize}
+    \item \textbf{Problème}: Risque de conditions de course (race conditions) entraînant des incohérences dans les données.
+    \item \textbf{Solution}: Utilisation de transactions MongoDB avec verrouillage optimiste pour garantir l'intégrité des données.
+\end{itemize}
+
+\subsection{Performances en Temps Réel}
+Le maintien des performances pour un grand nombre d'utilisateurs simultanés était essentiel:
+
+\begin{itemize}
+    \item \textbf{Problème}: Surcharge potentielle du serveur lors de pics d'activité.
+    \item \textbf{Solution}: 
+    \begin{itemize}
+        \item Optimisation de l'architecture Socket.io avec des espaces de noms et des salles
+        \item Mise en cache des données fréquemment accédées
+        \item Architecture horizontalement scalable
+    \end{itemize}
+\end{itemize}
+
+\subsection{Gestion des Images}
+La gestion efficace des images de véhicules représentait un défi important:
+
+\begin{itemize}
+    \item \textbf{Problème}: Stockage et livraison optimisés des images des véhicules.
+    \item \textbf{Solution}: 
+    \begin{itemize}
+        \item Utilisation d'un CDN pour la distribution des images
+        \item Redimensionnement automatique des images en fonction du contexte d'affichage
+        \item Compression progressive pour améliorer la vitesse de chargement
+    \end{itemize}
+\end{itemize} 

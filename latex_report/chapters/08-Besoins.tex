@@ -1,0 +1,441 @@
+\chapter{Analyse des Besoins}
+
+\section{Méthodologie d'Analyse}
+
+L'analyse des besoins constitue une étape fondamentale dans le développement de notre système d'enchères automobiles. Cette analyse a été menée selon une approche structurée visant à identifier avec précision les exigences fonctionnelles et non fonctionnelles du système.
+
+\subsection{Collecte des Besoins}
+
+La collecte des besoins a été réalisée à travers plusieurs méthodes complémentaires:
+
+\begin{itemize}
+    \item \textbf{Entretiens avec les parties prenantes}: Sessions de discussion avec des acheteurs et vendeurs potentiels, des experts du marché automobile, et des professionnels du développement d'applications
+    \item \textbf{Analyse concurrentielle}: Étude approfondie des plateformes d'enchères existantes pour identifier les meilleures pratiques et les opportunités d'innovation
+    \item \textbf{Ateliers de brainstorming}: Sessions collaboratives pour générer des idées de fonctionnalités et identifier les priorités
+    \item \textbf{Questionnaires}: Sondages ciblés pour recueillir les attentes des utilisateurs potentiels
+    \item \textbf{Analyse des tendances du marché}: Étude des évolutions récentes dans le domaine des enchères en ligne et du commerce électronique automobile
+\end{itemize}
+
+\subsection{Priorisation des Besoins}
+
+Les besoins identifiés ont été priorisés selon la méthode MoSCoW:
+
+\begin{description}
+    \item[Must Have] Fonctionnalités essentielles sans lesquelles le système ne peut pas fonctionner correctement
+    \item[Should Have] Fonctionnalités importantes mais non critiques pour le lancement initial
+    \item[Could Have] Fonctionnalités souhaitables qui apportent une valeur ajoutée mais peuvent être reportées
+    \item[Won't Have] Fonctionnalités intéressantes mais explicitement exclues de la version actuelle
+\end{description}
+
+Cette priorisation a permis de définir clairement le périmètre du projet et d'établir une feuille de route pour les développements futurs.
+
+\section{Exigences Fonctionnelles}
+
+Les exigences fonctionnelles définissent les comportements spécifiques et les fonctionnalités que le système doit offrir.
+
+\subsection{Gestion des Utilisateurs}
+
+\begin{enumerate}
+    \item \textbf{Inscription des utilisateurs (Must Have)}
+    \begin{itemize}
+        \item Le système doit permettre la création de nouveaux comptes utilisateurs
+        \item Les informations minimales requises incluent: nom d'utilisateur, email, mot de passe
+        \item Le système doit vérifier l'unicité des emails et noms d'utilisateur
+        \item Une confirmation par email doit être envoyée lors de l'inscription
+    \end{itemize}
+    
+    \item \textbf{Authentification (Must Have)}
+    \begin{itemize}
+        \item Les utilisateurs doivent pouvoir se connecter avec leur email et mot de passe
+        \item Le système doit offrir une fonction de récupération de mot de passe
+        \item L'authentification doit être sécurisée par des tokens JWT
+        \item Les sessions doivent expirer après une période d'inactivité
+    \end{itemize}
+    
+    \item \textbf{Gestion de profil (Should Have)}
+    \begin{itemize}
+        \item Les utilisateurs doivent pouvoir modifier leurs informations personnelles
+        \item Le téléchargement d'une photo de profil doit être possible
+        \item L'historique des activités (enchères placées, remportées) doit être consultable
+        \item Les préférences de notification doivent être configurables
+    \end{itemize}
+    
+    \item \textbf{Rôles et permissions (Must Have)}
+    \begin{itemize}
+        \item Le système doit distinguer au moins deux types d'utilisateurs: standard et administrateur
+        \item Les administrateurs doivent avoir accès à des fonctionnalités de gestion avancées
+        \item Les permissions doivent être vérifiées pour toutes les actions sensibles
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Gestion des Véhicules}
+
+\begin{enumerate}
+    \item \textbf{Ajout de véhicules (Must Have)}
+    \begin{itemize}
+        \item Les administrateurs doivent pouvoir ajouter de nouveaux véhicules au système
+        \item Les informations à saisir incluent: marque, modèle, année, kilométrage, couleur, etc.
+        \item Le téléchargement de multiples images doit être supporté
+        \item Une description détaillée du véhicule doit être possible
+    \end{itemize}
+    
+    \item \textbf{Modification des véhicules (Should Have)}
+    \begin{itemize}
+        \item Les informations des véhicules doivent être modifiables tant qu'ils ne sont pas en enchère
+        \item L'ajout, la suppression et la réorganisation des images doivent être possibles
+        \item Un historique des modifications doit être conservé
+    \end{itemize}
+    
+    \item \textbf{Suppression des véhicules (Should Have)}
+    \begin{itemize}
+        \item Les véhicules sans enchère active doivent pouvoir être supprimés
+        \item Une confirmation doit être demandée avant suppression
+        \item La suppression doit être logique plutôt que physique pour préserver l'historique
+    \end{itemize}
+    
+    \item \textbf{Visualisation des véhicules (Must Have)}
+    \begin{itemize}
+        \item Les utilisateurs doivent pouvoir consulter les détails complets des véhicules
+        \item Une galerie d'images avec fonction de zoom doit être disponible
+        \item Les caractéristiques techniques doivent être présentées de manière structurée
+        \item L'historique d'entretien, si disponible, doit être accessible
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Gestion des Enchères}
+
+\begin{enumerate}
+    \item \textbf{Création d'enchères (Must Have)}
+    \begin{itemize}
+        \item Les administrateurs doivent pouvoir créer de nouvelles enchères
+        \item Chaque enchère doit être associée à un véhicule spécifique
+        \item Les paramètres à définir incluent: prix de départ, incrément minimal, dates de début et fin
+        \item Des règles spécifiques (extension automatique, prix de réserve) doivent être configurables
+    \end{itemize}
+    
+    \item \textbf{Participation aux enchères (Must Have)}
+    \begin{itemize}
+        \item Les utilisateurs authentifiés doivent pouvoir placer des enchères
+        \item Le montant proposé doit être supérieur au prix actuel plus l'incrément minimal
+        \item L'utilisateur doit recevoir une confirmation immédiate de son enchère
+        \item L'historique des enchères doit être visible pour tous les participants
+    \end{itemize}
+    
+    \item \textbf{Suivi des enchères (Must Have)}
+    \begin{itemize}
+        \item Les utilisateurs doivent pouvoir suivre l'évolution des enchères en temps réel
+        \item Un compte à rebours doit indiquer le temps restant
+        \item Les notifications doivent être envoyées en cas de surenchère
+        \item Les enchères terminées doivent être clairement identifiées avec leur résultat
+    \end{itemize}
+    
+    \item \textbf{Finalisation des enchères (Should Have)}
+    \begin{itemize}
+        \item Les enchères doivent se terminer automatiquement à la date et heure définies
+        \item Le gagnant doit être déterminé et notifié automatiquement
+        \item Un récapitulatif doit être généré pour le vendeur et l'acheteur
+        \item Les enchères sans offre valide doivent être marquées comme non attribuées
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Notifications et Communication}
+
+\begin{enumerate}
+    \item \textbf{Notifications en temps réel (Must Have)}
+    \begin{itemize}
+        \item Les utilisateurs doivent recevoir des notifications push pour les événements importants
+        \item Les notifications doivent inclure: surenchères, fin imminente, enchère remportée/perdue
+        \item Les notifications doivent être personnalisables selon les préférences utilisateur
+    \end{itemize}
+    
+    \item \textbf{Alertes par email (Should Have)}
+    \begin{itemize}
+        \item Des emails doivent être envoyés pour les événements majeurs
+        \item Les contenus des emails doivent être personnalisés et professionnels
+        \item Une option de désabonnement doit être disponible
+    \end{itemize}
+    
+    \item \textbf{Centre de notifications (Could Have)}
+    \begin{itemize}
+        \item Un centre de notifications dans l'application doit centraliser tous les messages
+        \item Les notifications doivent pouvoir être marquées comme lues/non lues
+        \item Un historique des notifications doit être conservé
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Recherche et Filtrage}
+
+\begin{enumerate}
+    \item \textbf{Recherche de véhicules (Must Have)}
+    \begin{itemize}
+        \item Les utilisateurs doivent pouvoir rechercher des véhicules par mots-clés
+        \item La recherche doit porter sur les marques, modèles, descriptions, etc.
+        \item Les résultats doivent être pertinents et classés par ordre de pertinence
+    \end{itemize}
+    
+    \item \textbf{Filtrage avancé (Should Have)}
+    \begin{itemize}
+        \item Des filtres multiples doivent être disponibles: marque, modèle, année, prix, etc.
+        \item Les filtres doivent être combinables pour affiner les résultats
+        \item Les valeurs de filtrage doivent être présentées de manière intuitive (sliders, listes déroulantes)
+    \end{itemize}
+    
+    \item \textbf{Tri des résultats (Should Have)}
+    \begin{itemize}
+        \item Les résultats doivent pouvoir être triés selon différents critères
+        \item Les options de tri incluent: prix (croissant/décroissant), popularité, fin prochaine
+        \item Le tri sélectionné doit être mémorisé pendant la session
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Administration}
+
+\begin{enumerate}
+    \item \textbf{Tableau de bord administrateur (Must Have)}
+    \begin{itemize}
+        \item Un tableau de bord doit présenter les statistiques clés du système
+        \item Des graphiques d'activité doivent visualiser les tendances
+        \item Des alertes doivent signaler les situations nécessitant attention
+    \end{itemize}
+    
+    \item \textbf{Gestion des utilisateurs (Should Have)}
+    \begin{itemize}
+        \item Les administrateurs doivent pouvoir consulter, modifier et suspendre des comptes
+        \item Des filtres doivent permettre de rechercher rapidement des utilisateurs
+        \item L'historique d'activité des utilisateurs doit être accessible
+    \end{itemize}
+    
+    \item \textbf{Modération des enchères (Should Have)}
+    \begin{itemize}
+        \item Les administrateurs doivent pouvoir intervenir sur les enchères en cours
+        \item Les options incluent: pause, annulation, extension, modification du prix
+        \item Toute intervention doit être journalisée avec justification
+    \end{itemize}
+    
+    \item \textbf{Rapports et analyses (Could Have)}
+    \begin{itemize}
+        \item Des rapports détaillés doivent être générables sur différentes métriques
+        \item Les rapports peuvent concerner: ventes, utilisateurs, performances, etc.
+        \item L'exportation des données doit être possible en différents formats
+    \end{itemize}
+\end{enumerate}
+
+\section{Exigences Non Fonctionnelles}
+
+Les exigences non fonctionnelles définissent les critères de qualité et les contraintes auxquelles le système doit se conformer.
+
+\subsection{Performance}
+
+\begin{enumerate}
+    \item \textbf{Temps de réponse (Must Have)}
+    \begin{itemize}
+        \item Le temps de chargement initial de l'application ne doit pas excéder 3 secondes
+        \item Les interactions utilisateur doivent recevoir une réponse en moins de 1 seconde
+        \item La mise à jour des enchères en temps réel doit s'effectuer en moins de 500 ms
+    \end{itemize}
+    
+    \item \textbf{Capacité de charge (Should Have)}
+    \begin{itemize}
+        \item Le système doit supporter simultanément au moins 1000 utilisateurs actifs
+        \item Jusqu'à 100 enchères simultanées doivent être gérables sans dégradation
+        \item Le système doit pouvoir traiter au moins 50 enchères par minute
+    \end{itemize}
+    
+    \item \textbf{Scalabilité (Should Have)}
+    \begin{itemize}
+        \item L'architecture doit permettre une mise à l'échelle horizontale
+        \item Les pics d'activité doivent être absorbables par allocation dynamique de ressources
+        \item La performance ne doit pas se dégrader significativement avec l'augmentation du volume de données
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Sécurité}
+
+\begin{enumerate}
+    \item \textbf{Authentification et autorisation (Must Have)}
+    \begin{itemize}
+        \item Les mots de passe doivent être stockés avec un hachage fort (bcrypt)
+        \item L'authentification multi-facteurs doit être disponible
+        \item Les sessions doivent expirer automatiquement après 30 minutes d'inactivité
+        \item Les autorisations doivent être vérifiées à chaque action sensible
+    \end{itemize}
+    
+    \item \textbf{Protection des données (Must Have)}
+    \begin{itemize}
+        \item Toutes les communications doivent être chiffrées via HTTPS
+        \item Les données sensibles doivent être chiffrées au repos
+        \item Les accès aux données doivent être tracés et auditables
+        \item La conformité RGPD doit être assurée pour les utilisateurs européens
+    \end{itemize}
+    
+    \item \textbf{Sécurité applicative (Should Have)}
+    \begin{itemize}
+        \item Protection contre les injections SQL et NoSQL
+        \item Défense contre les attaques XSS et CSRF
+        \item Limitation du débit des requêtes pour prévenir les attaques DDoS
+        \item Validation stricte des entrées utilisateur côté serveur
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Fiabilité}
+
+\begin{enumerate}
+    \item \textbf{Disponibilité (Must Have)}
+    \begin{itemize}
+        \item Le système doit garantir une disponibilité de 99,9\% (hors maintenance planifiée)
+        \item Les temps d'arrêt planifiés doivent être annoncés au moins 24h à l'avance
+        \item Un plan de reprise après sinistre doit être en place avec RTO < 4h
+    \end{itemize}
+    
+    \item \textbf{Robustesse (Should Have)}
+    \begin{itemize}
+        \item Le système doit gérer gracieusement les erreurs côté client et serveur
+        \item Les transactions critiques doivent être protégées contre les défaillances
+        \item La reconnexion automatique doit être implémentée pour les communications temps réel
+    \end{itemize}
+    
+    \item \textbf{Intégrité des données (Must Have)}
+    \begin{itemize}
+        \item Les transactions impliquant des enchères doivent être atomiques
+        \item Des sauvegardes régulières doivent être effectuées avec RPO < 1h
+        \item La cohérence des données doit être vérifiable par des processus automatisés
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Utilisabilité}
+
+\begin{enumerate}
+    \item \textbf{Interface utilisateur (Must Have)}
+    \begin{itemize}
+        \item L'interface doit être intuitive et nécessiter un minimum de formation
+        \item La navigation doit être cohérente à travers toute l'application
+        \item Le design doit s'adapter aux différentes tailles d'écran (responsive)
+    \end{itemize}
+    
+    \item \textbf{Accessibilité (Should Have)}
+    \begin{itemize}
+        \item L'application doit être conforme aux normes WCAG 2.1 niveau AA
+        \item Le contraste des couleurs doit être suffisant pour les utilisateurs malvoyants
+        \item Des alternatives textuelles doivent être fournies pour tous les éléments visuels
+    \end{itemize}
+    
+    \item \textbf{Internationalisation (Could Have)}
+    \begin{itemize}
+        \item L'interface doit supporter plusieurs langues
+        \item Les formats de date, heure et devise doivent s'adapter aux paramètres régionaux
+        \item Le contenu doit être adaptable aux spécificités culturelles
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Compatibilité}
+
+\begin{enumerate}
+    \item \textbf{Compatibilité mobile (Must Have)}
+    \begin{itemize}
+        \item L'application doit fonctionner sur iOS 12+ et Android 8+
+        \item L'interface doit s'adapter aux différentes résolutions d'écran
+        \item Les fonctionnalités doivent être cohérentes entre plateformes
+    \end{itemize}
+    
+    \item \textbf{Compatibilité navigateur (Should Have)}
+    \begin{itemize}
+        \item Une version web progressive doit être compatible avec les navigateurs modernes
+        \item Le support minimum inclut: Chrome 70+, Firefox 60+, Safari 12+, Edge 79+
+        \item Les fonctionnalités dégradées gracieusement selon les capacités du navigateur
+    \end{itemize}
+    
+    \item \textbf{Intégration API (Could Have)}
+    \begin{itemize}
+        \item Des API publiques doivent être disponibles pour intégration tierce
+        \item Les API doivent être documentées selon les standards OpenAPI
+        \item Des environnements de test et de staging doivent être fournis
+    \end{itemize}
+\end{enumerate}
+
+\section{Contraintes Techniques}
+
+\begin{enumerate}
+    \item \textbf{Infrastructure}
+    \begin{itemize}
+        \item Le système doit être déployable sur des infrastructures cloud (AWS, GCP, Azure)
+        \item Les composants doivent être conteneurisés pour faciliter le déploiement
+        \item L'architecture doit supporter la réplication géographique
+    \end{itemize}
+    
+    \item \textbf{Développement}
+    \begin{itemize}
+        \item Le code source doit être versionné avec Git
+        \item Le développement doit suivre une approche CI/CD
+        \item Des tests automatisés doivent couvrir au moins 80\% du code
+    \end{itemize}
+    
+    \item \textbf{Maintenance}
+    \begin{itemize}
+        \item La documentation technique doit être maintenue à jour
+        \item Le code doit suivre des standards de qualité vérifiables automatiquement
+        \item Des logs détaillés doivent être générés pour faciliter le débogage
+    \end{itemize}
+\end{enumerate}
+
+\section{Scénarios d'Utilisation}
+
+Pour illustrer concrètement les besoins identifiés, plusieurs scénarios d'utilisation ont été définis:
+
+\subsection{Scénario 1: Inscription et Première Enchère}
+
+\begin{quote}
+Jean découvre l'application d'enchères automobiles et décide de s'inscrire. Après avoir créé son compte et complété son profil, il parcourt les enchères en cours. Un véhicule attire son attention: une Peugeot 308 de 2018 avec 45,000 km. L'enchère se termine dans 3 heures et le prix actuel est de 12,500€. Jean décide de placer une enchère à 12,700€. Il reçoit une confirmation immédiate et peut voir son nom apparaître comme enchérisseur principal. Une heure plus tard, il reçoit une notification l'informant qu'il a été surenchéri. Il retourne dans l'application et place une nouvelle enchère à 13,100€.
+\end{quote}
+
+Ce scénario illustre le processus d'inscription, la navigation dans les enchères, le placement d'enchères et le système de notification.
+
+\subsection{Scénario 2: Gestion d'une Enchère par un Administrateur}
+
+\begin{quote}
+Marie, administratrice de la plateforme, doit ajouter un nouveau véhicule: une Audi A3 de 2020. Elle se connecte au panneau d'administration, crée une nouvelle fiche véhicule avec toutes les informations techniques, télécharge 8 photos de la voiture, et rédige une description détaillée. Elle configure ensuite une nouvelle enchère avec un prix de départ de 18,000€, un incrément minimal de 200€, et programme son démarrage pour le lendemain à 10h00, avec une durée de 3 jours. Deux jours plus tard, elle constate que l'enchère génère beaucoup d'intérêt et décide de vérifier les participants. Elle peut voir que 15 personnes ont placé un total de 28 enchères, et que le prix actuel est de 22,600€.
+\end{quote}
+
+Ce scénario illustre les fonctionnalités d'administration, la création de véhicules et d'enchères, ainsi que le suivi des enchères en cours.
+
+\subsection{Scénario 3: Finalisation d'une Enchère Réussie}
+
+\begin{quote}
+L'enchère pour la Toyota Yaris 2019 vient de se terminer. Thomas, qui avait placé la dernière enchère à 14,800€, reçoit une notification l'informant qu'il a remporté l'enchère. Simultanément, l'administrateur reçoit une alerte de fin d'enchère réussie. Le système met automatiquement à jour le statut de l'enchère à "Terminée" et marque Thomas comme gagnant. Thomas reçoit un email récapitulatif avec les détails du véhicule et les prochaines étapes pour finaliser l'achat. Il peut également consulter ces informations dans la section "Mes enchères remportées" de son profil.
+\end{quote}
+
+Ce scénario illustre le processus de finalisation d'une enchère, les notifications automatiques et la gestion post-enchère.
+
+\section{Matrice de Traçabilité}
+
+Une matrice de traçabilité a été établie pour assurer que toutes les exigences identifiées sont correctement adressées dans la conception et l'implémentation du système. Cette matrice met en relation les exigences avec les composants logiciels et les cas de test correspondants.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{4cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Exigence} & \textbf{Composant logiciel} & \textbf{Cas de test} \\
+\hline
+Inscription des utilisateurs & AuthController,
+UserModel & Test\_Registration\_Valid,
+Test\_Registration\_Invalid \\
+\hline
+Placement d'enchères & BidController,
+BidService,
+SocketHandler & Test\_Bid\_Valid,
+Test\_Bid\_Concurrent,
+Test\_Bid\_Notification \\
+\hline
+Notifications en temps réel & NotificationService,
+SocketHandler & Test\_Notification\_Outbid,
+Test\_Notification\_EndingSoon \\
+\hline
+Sécurité des transactions & AuthMiddleware,
+TransactionService & Test\_Security\_Authentication,
+Test\_Transaction\_Integrity \\
+\hline
+\end{tabular}
+\caption{Extrait de la matrice de traçabilité}
+\label{table:traceability}
+\end{table}
+
+Cette matrice est maintenue tout au long du projet pour garantir que toutes les exigences sont correctement implémentées et testées. 

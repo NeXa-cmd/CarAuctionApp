@@ -1,0 +1,158 @@
+\chapter{Annexes}
+
+\section{Guide d'Installation}
+\subsection{Prérequis}
+\begin{itemize}
+    \item Node.js v23.10.0 ou supérieur
+    \item MongoDB
+    \item Xcode (pour iOS)
+    \item npm ou yarn
+\end{itemize}
+
+\subsection{Installation du Projet}
+\begin{lstlisting}[language=bash]
+# Clone du projet
+git clone [URL_DU_PROJET]
+
+# Installation des dépendances backend
+cd backend
+npm install
+
+# Installation des dépendances frontend admin
+cd ../admin-dashboard
+npm install
+
+# Installation des dépendances mobile
+cd ../mobile
+npm install
+\end{lstlisting}
+
+\subsection{Configuration}
+\begin{lstlisting}[language=bash]
+# Configuration des ports
+Backend: 5001
+Admin Dashboard: 3000
+Metro Bundler: 8081
+
+# En cas de conflit de ports
+lsof -ti:5001,3000,8081 | xargs kill -9
+\end{lstlisting}
+
+\section{Documentation API}
+\subsection{Routes d'Authentification}
+\begin{itemize}
+    \item \textbf{POST /api/auth/register}
+    \begin{lstlisting}[language=JavaScript]
+    {
+        "email": "string",
+        "password": "string",
+        "name": "string"
+    }
+    \end{lstlisting}
+    
+    \item \textbf{POST /api/auth/login}
+    \begin{lstlisting}[language=JavaScript]
+    {
+        "email": "string",
+        "password": "string"
+    }
+    \end{lstlisting}
+\end{itemize}
+
+\subsection{Routes des Enchères}
+\begin{itemize}
+    \item \textbf{GET /api/auctions}
+    \item \textbf{POST /api/auctions}
+    \begin{lstlisting}[language=JavaScript]
+    {
+        "title": "string",
+        "description": "string",
+        "startPrice": "number",
+        "startTime": "date",
+        "endTime": "date"
+    }
+    \end{lstlisting}
+    
+    \item \textbf{POST /api/auctions/:id/bid}
+    \begin{lstlisting}[language=JavaScript]
+    {
+        "amount": "number"
+    }
+    \end{lstlisting}
+\end{itemize}
+
+\section{Schéma de la Base de Données}
+\subsection{Collection Users}
+\begin{lstlisting}[language=JavaScript]
+{
+    "_id": ObjectId,
+    "email": String,
+    "password": String,
+    "name": String,
+    "role": String,
+    "createdAt": Date
+}
+\end{lstlisting}
+
+\subsection{Collection Auctions}
+\begin{lstlisting}[language=JavaScript]
+{
+    "_id": ObjectId,
+    "title": String,
+    "description": String,
+    "startPrice": Number,
+    "currentPrice": Number,
+    "startTime": Date,
+    "endTime": Date,
+    "status": String,
+    "winner": ObjectId,
+    "bids": Array
+}
+\end{lstlisting}
+
+% Appendice : Images de l'application
+\section{Captures d'écran de l'application}
+
+% Images commented out due to missing files
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.4\textwidth]{images/app_screenshot1.png}
+%\caption{Écran principal de l'application mobile}
+%\label{fig:app_screenshot}
+%\end{figure}
+
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.8\textwidth]{images/admin_dashboard.png}
+%\caption{Tableau de bord administrateur}
+%\label{fig:admin_dashboard}
+%\end{figure}
+
+\section{Logs et Débogage}
+\subsection{Exemple de Logs}
+\begin{lstlisting}[language=bash]
+# Logs de mise à jour des statuts
+Status updates: 0 became active, 0 ended
+Processed winners for 2 newly ended auctions
+
+# Logs de démarrage du serveur
+Upload directories created successfully
+Server running on port 5001
+Connected to MongoDB
+\end{lstlisting}
+
+\section{Scripts Utiles}
+\subsection{Gestion des Processus}
+\begin{lstlisting}[language=bash]
+# Démarrage du backend
+cd backend && npm start
+
+# Démarrage du dashboard admin
+cd admin-dashboard && npm start
+
+# Démarrage du bundler React Native
+npx react-native start --reset-cache
+
+# Lancement de l'app iOS
+npx react-native run-ios
+\end{lstlisting} 

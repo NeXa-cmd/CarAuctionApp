@@ -1,0 +1,248 @@
+\babel@toc {french}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Contexte et Motivation}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Problématique}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objectifs du Projet}{1}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Objectifs Fonctionnels}{1}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Objectifs Techniques}{2}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Objectifs Pédagogiques}{2}{subsection.1.3.3}%
+\contentsline {section}{\numberline {1.4}Périmètre du Projet}{2}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Fonctionnalités Couvertes}{2}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Limites et Exclusions}{2}{subsection.1.4.2}%
+\contentsline {section}{\numberline {1.5}Méthodologie}{2}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Approche de Développement}{2}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Phases du Projet}{3}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Outils de Gestion}{3}{subsection.1.5.3}%
+\contentsline {section}{\numberline {1.6}Structure du Rapport}{3}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Aperçu de l'Application}{3}{section.1.7}%
+\contentsline {chapter}{\numberline {2}État de l'Art}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Introduction aux Systèmes d'Enchères en Ligne}{4}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Évolution Historique}{4}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Typologies d'Enchères}{4}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Analyse des Plateformes d'Enchères Automobiles Existantes}{5}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Acteurs Majeurs du Marché}{5}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Analyse Comparative}{5}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}Technologies Clés pour les Systèmes d'Enchères Modernes}{5}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Technologies Frontend}{6}{subsection.2.3.1}%
+\contentsline {subsubsection}{Applications Mobiles Natives vs Hybrides}{6}{subsubsection*.9}%
+\contentsline {subsubsection}{Interfaces Utilisateur Réactives}{6}{subsubsection*.10}%
+\contentsline {subsection}{\numberline {2.3.2}Technologies Backend}{6}{subsection.2.3.2}%
+\contentsline {subsubsection}{Architectures API}{6}{subsubsection*.11}%
+\contentsline {subsubsection}{Communication Temps Réel}{6}{subsubsection*.12}%
+\contentsline {subsection}{\numberline {2.3.3}Technologies de Base de Données}{7}{subsection.2.3.3}%
+\contentsline {subsubsection}{Bases de Données SQL vs NoSQL}{7}{subsubsection*.13}%
+\contentsline {subsubsection}{Technologies de Cache}{7}{subsubsection*.14}%
+\contentsline {section}{\numberline {2.4}Sécurité et Authentification}{7}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Mécanismes d'Authentification Modernes}{7}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Sécurisation des Transactions}{7}{subsection.2.4.2}%
+\contentsline {section}{\numberline {2.5}Tendances Émergentes et Innovations}{8}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Intelligence Artificielle et Machine Learning}{8}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Blockchain et Contrats Intelligents}{8}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Réalité Augmentée et Virtuelle}{8}{subsection.2.5.3}%
+\contentsline {section}{\numberline {2.6}Défis et Opportunités du Marché}{8}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Défis Actuels}{8}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Opportunités de Marché}{9}{subsection.2.6.2}%
+\contentsline {section}{\numberline {2.7}Conclusion et Positionnement de Notre Solution}{9}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Technologies et Outils Utilisés}{10}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Vue d'Ensemble de la Stack Technologique}{10}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Architecture Globale}{10}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Technologies Frontend}{10}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}React Native}{10}{subsection.3.2.1}%
+\contentsline {subsubsection}{Composants React Native Principaux}{10}{subsubsection*.15}%
+\contentsline {subsection}{\numberline {3.2.2}React Navigation}{11}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Gestion de l'État}{11}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Bibliothèques UI Complémentaires}{13}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}Technologies Backend}{13}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Node.js et Express}{13}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Architecture API RESTful}{14}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Sécurité}{15}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Communication Temps Réel avec Socket.io}{16}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Principes de Fonctionnement}{16}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Intégration Côté Client}{18}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Base de Données MongoDB}{20}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Choix de MongoDB}{20}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Modélisation des Données}{20}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Optimisation des Performances}{24}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Outils de Développement et Déploiement}{24}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Environnement de Développement}{24}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}CI/CD et Déploiement}{24}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}Monitoring et Logging}{24}{subsection.3.6.3}%
+\contentsline {section}{\numberline {3.7}Choix Technologiques et Alternatives}{25}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Justification des Choix}{25}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Alternatives Considérées}{25}{subsection.3.7.2}%
+\contentsline {chapter}{\numberline {4}Manuel d'Utilisation}{26}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Introduction à l'Application}{26}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Public Cible}{26}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Prérequis Techniques}{26}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Installation et Configuration}{26}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Téléchargement de l'Application}{26}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Création de Compte}{26}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Connexion}{27}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Interface Utilisateur}{27}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Navigation Principale}{27}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Écran d'Accueil}{27}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Participation aux Enchères}{27}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Recherche et Consultation des Enchères}{27}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Détails d'une Enchère}{28}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Placement d'une Enchère}{28}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Suivi des Enchères}{28}{subsection.4.4.4}%
+\contentsline {section}{\numberline {4.5}Gestion du Profil Utilisateur}{28}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Modification des Informations Personnelles}{28}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Gestion des Notifications}{28}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Historique des Transactions}{29}{subsection.4.5.3}%
+\contentsline {section}{\numberline {4.6}Fonctionnalités Administrateur}{29}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Gestion des Véhicules}{29}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Création et Gestion des Enchères}{29}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}Gestion des Utilisateurs}{30}{subsection.4.6.3}%
+\contentsline {section}{\numberline {4.7}Résolution des Problèmes Courants}{30}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Problèmes de Connexion}{30}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}Problèmes avec les Enchères}{30}{subsection.4.7.2}%
+\contentsline {subsection}{\numberline {4.7.3}Problèmes Techniques Généraux}{30}{subsection.4.7.3}%
+\contentsline {section}{\numberline {4.8}Support et Assistance}{30}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}Centre d'Aide}{30}{subsection.4.8.1}%
+\contentsline {subsection}{\numberline {4.8.2}Contact du Support}{31}{subsection.4.8.2}%
+\contentsline {section}{\numberline {4.9}Interface de l'Application}{31}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}Authentification et Inscription}{32}{subsection.4.9.1}%
+\contentsline {subsection}{\numberline {4.9.2}Page d'Accueil et Enchères}{33}{subsection.4.9.2}%
+\contentsline {subsection}{\numberline {4.9.3}Gestion des Enchères}{34}{subsection.4.9.3}%
+\contentsline {subsection}{\numberline {4.9.4}Profil Utilisateur}{35}{subsection.4.9.4}%
+\contentsline {subsection}{\numberline {4.9.5}Détails du Véhicule et Enchère}{36}{subsection.4.9.5}%
+\contentsline {subsection}{\numberline {4.9.6}Historique des Enchères}{37}{subsection.4.9.6}%
+\contentsline {section}{\numberline {4.10}Fonctionnalités Principales}{38}{section.4.10}%
+\contentsline {section}{\numberline {4.11}Conseils d'Utilisation}{38}{section.4.11}%
+\contentsline {chapter}{\numberline {5}Analyse de l'Existant}{39}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Solutions d'Enchères Existantes}{39}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Solutions Traditionnelles}{39}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Solutions Numériques Actuelles}{39}{subsection.5.1.2}%
+\contentsline {section}{\numberline {5.2}Limitations des Solutions Existantes}{39}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Problèmes Techniques}{39}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Problèmes Fonctionnels}{39}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Opportunités d'Amélioration}{39}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Aspects Techniques}{39}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Aspects Fonctionnels}{39}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}Analyse des Risques}{40}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Analyse des Besoins}{41}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Méthodologie d'Analyse}{41}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Collecte des Besoins}{41}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Priorisation des Besoins}{41}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}Exigences Fonctionnelles}{41}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Gestion des Utilisateurs}{41}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Gestion des Véhicules}{42}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}Gestion des Enchères}{42}{subsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.2.4}Notifications et Communication}{43}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {6.2.5}Recherche et Filtrage}{43}{subsection.6.2.5}%
+\contentsline {subsection}{\numberline {6.2.6}Administration}{43}{subsection.6.2.6}%
+\contentsline {section}{\numberline {6.3}Exigences Non Fonctionnelles}{44}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Performance}{44}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Sécurité}{44}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Fiabilité}{45}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}Utilisabilité}{45}{subsection.6.3.4}%
+\contentsline {subsection}{\numberline {6.3.5}Compatibilité}{45}{subsection.6.3.5}%
+\contentsline {section}{\numberline {6.4}Contraintes Techniques}{45}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Scénarios d'Utilisation}{46}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Scénario 1: Inscription et Première Enchère}{46}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Scénario 2: Gestion d'une Enchère par un Administrateur}{46}{subsection.6.5.2}%
+\contentsline {subsection}{\numberline {6.5.3}Scénario 3: Finalisation d'une Enchère Réussie}{46}{subsection.6.5.3}%
+\contentsline {section}{\numberline {6.6}Matrice de Traçabilité}{47}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Conception du Système d'Enchères}{48}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Architecture Globale}{48}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Vue d'ensemble}{48}{subsection.7.1.1}%
+\contentsline {section}{\numberline {7.2}Diagramme de Cas d'Utilisation}{48}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Acteurs du Système}{48}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}Cas d'Utilisation Principaux}{48}{subsection.7.2.2}%
+\contentsline {section}{\numberline {7.3}Diagramme de Séquence}{48}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Analyse du Flux d'Enchère}{49}{subsection.7.3.1}%
+\contentsline {section}{\numberline {7.4}Diagramme de Classes}{49}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Entités Principales}{49}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Relations Entre Entités}{49}{subsection.7.4.2}%
+\contentsline {section}{\numberline {7.5}Modèles de Données}{49}{section.7.5}%
+\contentsline {subsection}{\numberline {7.5.1}Modèle Utilisateur}{49}{subsection.7.5.1}%
+\contentsline {subsection}{\numberline {7.5.2}Modèle Enchère}{50}{subsection.7.5.2}%
+\contentsline {subsection}{\numberline {7.5.3}Modèle Voiture}{50}{subsection.7.5.3}%
+\contentsline {subsection}{\numberline {7.5.4}Modèle Offre}{50}{subsection.7.5.4}%
+\contentsline {section}{\numberline {7.6}Architecture Technique}{50}{section.7.6}%
+\contentsline {subsection}{\numberline {7.6.1}Architecture Frontend}{50}{subsection.7.6.1}%
+\contentsline {subsection}{\numberline {7.6.2}Architecture Backend}{51}{subsection.7.6.2}%
+\contentsline {subsection}{\numberline {7.6.3}Communication en Temps Réel}{51}{subsection.7.6.3}%
+\contentsline {subsection}{\numberline {7.6.4}Base de Données}{51}{subsection.7.6.4}%
+\contentsline {chapter}{\numberline {8}Réalisation Technique}{55}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Implémentation Frontend}{55}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Structure de l'Application Mobile}{55}{subsection.8.1.1}%
+\contentsline {subsubsection}{Organisation des Écrans}{55}{subsubsection*.29}%
+\contentsline {subsubsection}{Navigation}{55}{subsubsection*.30}%
+\contentsline {subsection}{\numberline {8.1.2}Composants Réutilisables}{55}{subsection.8.1.2}%
+\contentsline {subsection}{\numberline {8.1.3}Gestion du State}{56}{subsection.8.1.3}%
+\contentsline {subsection}{\numberline {8.1.4}Communication Temps Réel}{57}{subsection.8.1.4}%
+\contentsline {section}{\numberline {8.2}Implémentation Backend}{57}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Architecture API}{57}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Contrôleurs}{58}{subsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.2.3}Middleware}{60}{subsection.8.2.3}%
+\contentsline {subsection}{\numberline {8.2.4}Services}{60}{subsection.8.2.4}%
+\contentsline {section}{\numberline {8.3}Intégration et Tests}{62}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Tests Unitaires}{62}{subsection.8.3.1}%
+\contentsline {subsection}{\numberline {8.3.2}Déploiement}{63}{subsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.3.3}Sécurité}{63}{subsection.8.3.3}%
+\contentsline {section}{\numberline {8.4}Défis Techniques et Solutions}{63}{section.8.4}%
+\contentsline {subsection}{\numberline {8.4.1}Concurrence dans les Enchères}{63}{subsection.8.4.1}%
+\contentsline {subsection}{\numberline {8.4.2}Performances en Temps Réel}{64}{subsection.8.4.2}%
+\contentsline {subsection}{\numberline {8.4.3}Gestion des Images}{64}{subsection.8.4.3}%
+\contentsline {chapter}{\numberline {9}Défis d'Implémentation et Perspectives d'Évolution}{65}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Défis Techniques Rencontrés}{65}{section.9.1}%
+\contentsline {subsection}{\numberline {9.1.1}Gestion de la Concurrence}{65}{subsection.9.1.1}%
+\contentsline {subsubsection}{Problématique}{65}{subsubsection*.31}%
+\contentsline {subsubsection}{Solutions Implémentées}{65}{subsubsection*.32}%
+\contentsline {subsection}{\numberline {9.1.2}Optimisation des Performances}{66}{subsection.9.1.2}%
+\contentsline {subsubsection}{Problématique}{66}{subsubsection*.33}%
+\contentsline {subsubsection}{Solutions Implémentées}{66}{subsubsection*.34}%
+\contentsline {subsection}{\numberline {9.1.3}Sécurité et Authentification}{67}{subsection.9.1.3}%
+\contentsline {subsubsection}{Problématique}{67}{subsubsection*.35}%
+\contentsline {subsubsection}{Solutions Implémentées}{67}{subsubsection*.36}%
+\contentsline {section}{\numberline {9.2}Perspectives d'Évolution}{68}{section.9.2}%
+\contentsline {subsection}{\numberline {9.2.1}Fonctionnalités Additionnelles}{68}{subsection.9.2.1}%
+\contentsline {subsubsection}{Système de Paiement Intégré}{68}{subsubsection*.37}%
+\contentsline {subsubsection}{Système de Notation et d'Avis}{68}{subsubsection*.38}%
+\contentsline {subsubsection}{Assistant d'Enchères Intelligent}{68}{subsubsection*.39}%
+\contentsline {subsubsection}{Système de Messagerie Interne}{68}{subsubsection*.40}%
+\contentsline {subsection}{\numberline {9.2.2}Améliorations Techniques}{68}{subsection.9.2.2}%
+\contentsline {subsubsection}{Architecture Serverless}{68}{subsubsection*.41}%
+\contentsline {subsubsection}{Progressive Web App (PWA)}{69}{subsubsection*.42}%
+\contentsline {subsubsection}{Intelligence Artificielle et Machine Learning}{69}{subsubsection*.43}%
+\contentsline {subsection}{\numberline {9.2.3}Expansion Internationale}{69}{subsection.9.2.3}%
+\contentsline {subsubsection}{Multilinguisme et Localisation}{69}{subsubsection*.44}%
+\contentsline {subsubsection}{Infrastructure Géo-Distribuée}{69}{subsubsection*.45}%
+\contentsline {section}{\numberline {9.3}Analyse Comparative avec des Solutions Existantes}{69}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Forces du Système}{69}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}Opportunités d'Amélioration}{69}{subsection.9.3.2}%
+\contentsline {section}{\numberline {9.4}Impact Écologique et Économique}{70}{section.9.4}%
+\contentsline {subsection}{\numberline {9.4.1}Réduction de l'Empreinte Carbone}{70}{subsection.9.4.1}%
+\contentsline {subsection}{\numberline {9.4.2}Démocratisation du Marché Automobile}{70}{subsection.9.4.2}%
+\contentsline {chapter}{\numberline {10}Conclusion}{71}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Synthèse du Projet}{71}{section.10.1}%
+\contentsline {subsection}{\numberline {10.1.1}Réalisations Principales}{71}{subsection.10.1.1}%
+\contentsline {subsection}{\numberline {10.1.2}Objectifs Atteints}{71}{subsection.10.1.2}%
+\contentsline {section}{\numberline {10.2}Compétences Développées}{71}{section.10.2}%
+\contentsline {subsection}{\numberline {10.2.1}Compétences Techniques}{71}{subsection.10.2.1}%
+\contentsline {subsection}{\numberline {10.2.2}Compétences Méthodologiques}{71}{subsection.10.2.2}%
+\contentsline {section}{\numberline {10.3}Apports Personnels et Professionnels}{72}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}Développement Personnel}{72}{subsection.10.3.1}%
+\contentsline {subsection}{\numberline {10.3.2}Développement Professionnel}{72}{subsection.10.3.2}%
+\contentsline {section}{\numberline {10.4}Perspectives d'Avenir}{72}{section.10.4}%
+\contentsline {subsection}{\numberline {10.4.1}Évolution du Projet}{72}{subsection.10.4.1}%
+\contentsline {subsection}{\numberline {10.4.2}Applications des Connaissances Acquises}{72}{subsection.10.4.2}%
+\contentsline {section}{\numberline {10.5}Mot de Fin}{72}{section.10.5}%
+\contentsline {chapter}{\numberline {11}Annexes}{74}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Guide d'Installation}{74}{section.11.1}%
+\contentsline {subsection}{\numberline {11.1.1}Prérequis}{74}{subsection.11.1.1}%
+\contentsline {subsection}{\numberline {11.1.2}Installation du Projet}{74}{subsection.11.1.2}%
+\contentsline {subsection}{\numberline {11.1.3}Configuration}{74}{subsection.11.1.3}%
+\contentsline {section}{\numberline {11.2}Documentation API}{74}{section.11.2}%
+\contentsline {subsection}{\numberline {11.2.1}Routes d'Authentification}{74}{subsection.11.2.1}%
+\contentsline {subsection}{\numberline {11.2.2}Routes des Enchères}{75}{subsection.11.2.2}%
+\contentsline {section}{\numberline {11.3}Schéma de la Base de Données}{75}{section.11.3}%
+\contentsline {subsection}{\numberline {11.3.1}Collection Users}{75}{subsection.11.3.1}%
+\contentsline {subsection}{\numberline {11.3.2}Collection Auctions}{75}{subsection.11.3.2}%
+\contentsline {section}{\numberline {11.4}Captures d'écran de l'application}{76}{section.11.4}%
+\contentsline {section}{\numberline {11.5}Logs et Débogage}{76}{section.11.5}%
+\contentsline {subsection}{\numberline {11.5.1}Exemple de Logs}{76}{subsection.11.5.1}%
+\contentsline {section}{\numberline {11.6}Scripts Utiles}{76}{section.11.6}%
+\contentsline {subsection}{\numberline {11.6.1}Gestion des Processus}{76}{subsection.11.6.1}%
