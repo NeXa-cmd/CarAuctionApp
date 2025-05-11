@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/carauction
+      - JWT_SECRET=your_jwt_secret
+      - NODE_ENV=production
+    depends_on:
+      - mongo
+    restart: always
+
+  admin-dashboard:
+    build: ./admin-dashboard
+    ports:
+      - "80:80"
+    environment:
+      - REACT_APP_API_URL=http://139.59.148.94:3000
+    depends_on:
+      - backend
+    restart: always
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - backend
+      - admin-dashboard
+    restart: always
+
+volumes:
+  mongodb_data: 
