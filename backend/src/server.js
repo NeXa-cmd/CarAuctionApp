@@ -26,7 +26,7 @@ const io = socketIo(server, {
       if (!origin) return callback(null, true);
       
       // Allow if origin is localhost or starts with 127.0.0.1
-      if (origin.startsWith('http://localhost:') || 
+      if (origin.startsWith('http://157.230.124.2:3000') || 
           origin.startsWith('http://127.0.0.1:')) {
         return callback(null, true);
       }
@@ -45,7 +45,7 @@ app.use(cors({
     if (!origin) return callback(null, true);
     
     // Allow if origin is localhost or starts with 127.0.0.1
-    if (origin.startsWith('http://localhost:') || 
+    if (origin.startsWith('http://157.230.124.2:3000') || 
         origin.startsWith('http://127.0.0.1:')) {
       return callback(null, true);
     }

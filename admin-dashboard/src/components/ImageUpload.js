@@ -11,7 +11,7 @@ import {
 import { Delete as DeleteIcon, CloudUpload as CloudUploadIcon } from '@mui/icons-material';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5001/api';
+const API_URL = 'http://157.230.124.2:5001/api';
 
 export default function ImageUpload({ initialImages = [], onUpload }) {
   const [uploading, setUploading] = useState(false);

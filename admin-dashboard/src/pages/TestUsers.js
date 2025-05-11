@@ -14,7 +14,7 @@ const TestUsers = () => {
       const token = localStorage.getItem('token');
       console.log('Using token:', token);
       
-      const response = await axios.get('http://localhost:5001/api/users', {
+      const response = await axios.get('http://157.230.124.2:5001/api/users', {
         headers: {
           Authorization: `Bearer ${token}`
         }

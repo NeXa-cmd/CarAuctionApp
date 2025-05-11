@@ -51,7 +51,7 @@ export default function Auctions() {
       try {
         setAuctionsLoading(true);
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5001/api/auctions', {
+        const response = await axios.get('http://157.230.124.2:5001/api/auctions', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -76,7 +76,7 @@ export default function Auctions() {
       try {
         setCarsLoading(true);
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5001/api/cars', {
+        const response = await axios.get('http://157.230.124.2:5001/api/cars', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -102,14 +102,14 @@ export default function Auctions() {
   const handleCreateAuction = async (auctionData) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5001/api/auctions', auctionData, {
+      await axios.post('http://157.230.124.2:5001/api/auctions', auctionData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       
       // Refresh auctions list
-      const response = await axios.get('http://localhost:5001/api/auctions', {
+      const response = await axios.get('http://157.230.124.2:5001/api/auctions', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -127,14 +127,14 @@ export default function Auctions() {
   const handleUpdateAuction = async (id, auctionData) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5001/api/auctions/${id}`, auctionData, {
+      await axios.put(`http://157.230.124.2:5001/api/auctions/${id}`, auctionData, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       
       // Refresh auctions list
-      const response = await axios.get('http://localhost:5001/api/auctions', {
+      const response = await axios.get('http://157.230.124.2:5001/api/auctions', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -152,14 +152,14 @@ export default function Auctions() {
   const handleDeleteAuction = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5001/api/auctions/${id}`, {
+      await axios.delete(`http://157.230.124.2:5001/api/auctions/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       
       // Refresh auctions list
-      const response = await axios.get('http://localhost:5001/api/auctions', {
+      const response = await axios.get('http://157.230.124.2:5001/api/auctions', {
         headers: {
           Authorization: `Bearer ${token}`
         }

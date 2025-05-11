@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-toast-message';
 import { useAuth } from '../contexts/AuthContext';
 
-const API_URL = Platform.OS === 'ios' ? 'http://localhost:5001/api' : 'http://10.0.2.2:5001/api';
+const API_URL = Platform.OS === 'ios' ? 'http://157.230.124.2:5001/api' : 'http://10.0.2.2:5001/api';
 
 const CarDetailScreen = ({ route, navigation }) => {
   const { auctionId } = route.params;

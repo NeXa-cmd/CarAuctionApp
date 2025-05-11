@@ -46,7 +46,7 @@ export default function Users() {
         }
 
         console.log('Using token:', token);
-        const response = await axios.get('http://localhost:5001/api/users', {
+        const response = await axios.get('http://157.230.124.2:5001/api/users', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -77,14 +77,14 @@ export default function Users() {
   const handleUpdateUser = async (user) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5001/api/users/${user._id}`, user, {
+      await axios.put(`http://157.230.124.2:5001/api/users/${user._id}`, user, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       
       // Refresh users list
-      const response = await axios.get('http://localhost:5001/api/users', {
+      const response = await axios.get('http://157.230.124.2:5001/api/users', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -106,14 +106,14 @@ export default function Users() {
   const handleDeleteUser = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5001/api/users/${id}`, {
+      await axios.delete(`http://157.230.124.2:5001/api/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       
       // Refresh users list
-      const response = await axios.get('http://localhost:5001/api/users', {
+      const response = await axios.get('http://157.230.124.2:5001/api/users', {
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getMyAuctions } from '../services/api';
 
-const API_URL = Platform.OS === 'ios' ? 'http://localhost:5001/api' : 'http://10.0.2.2:5001/api';
+const API_URL = Platform.OS === 'ios' ? 'http://157.230.124.2:5001/api' : 'http://10.0.2.2:5001/api';
 
 const MyAuctionsScreen = ({ navigation }) => {
   const [wonAuctions, setWonAuctions] = useState([]);

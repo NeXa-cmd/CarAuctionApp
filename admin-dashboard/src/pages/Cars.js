@@ -30,7 +30,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { getCars, createCar, updateCar, deleteCar } from '../services/api';
 import ImageUpload from '../components/ImageUpload';
 
-const API_URL = 'http://localhost:5001/api';
+const API_URL = 'http://157.230.124.2:5001/api';
 
 export default function Cars() {
   const [open, setOpen] = useState(false);
