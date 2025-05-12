@@ -21,18 +21,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: function(origin, callback) {
-      // Allow requests with no origin (like mobile apps)
-      if (!origin) return callback(null, true);
-      
-      // Allow if origin is localhost or starts with 127.0.0.1
-      if (origin.startsWith('http://157.230.124.2:3000') || 
-          origin.startsWith('http://127.0.0.1:')) {
-        return callback(null, true);
-      }
-      
-      callback(new Error('Not allowed by CORS'));
-    },
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   }
