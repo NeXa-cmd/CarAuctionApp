@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const API_URL = 'http://139.59.148.94:5001/api';
+const API_URL = 'http://157.230.124.2/';
 
 const CarCard = ({ car, auction, currentBid, endTime, onPress }) => {
   if (!car) {
