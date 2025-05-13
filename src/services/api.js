@@ -3,17 +3,22 @@ import { Platform } from 'react-native';
 
 // For iOS simulator, use localhost
 // For Android emulator, use 10.0.2.2
-const API_URL = Platform.OS === 'ios' 
-  ? 'http://localhost:5001/api'
-  : 'http://10.0.2.2:5001/api';
+const API_URL = 'http://157.230.124.2:5001/api';
 
 // Helper function to get headers
 const getHeaders = async () => {
-  const token = await AsyncStorage.getItem('token');
-  return {
-    'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-  };
+  try {
+    const token = await AsyncStorage.getItem('token');
+    return {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    };
+  } catch (error) {
+    console.error('Error getting headers:', error);
+    return {
+      'Content-Type': 'application/json',
+    };
+  }
 };
 
 export const login = async (email, password) => {
@@ -287,8 +292,16 @@ export const removeFromWatchlist = async (carId) => {
 // Error handler
 const handleResponse = async (response) => {
   try {
+    console.log('API Response Status:', response.status);
+    console.log('API Response Headers:', response.headers);
+    
     const data = await response.json();
-    if (!response.ok) throw new Error(data.message || 'Something went wrong');
+    console.log('API Response Data:', data);
+    
+    if (!response.ok) {
+      console.error('API Error:', data);
+      throw new Error(data.message || 'Something went wrong');
+    }
     
     // Helper function to safely convert ObjectIds and handle special fields
     const processValue = (value, key) => {
@@ -339,6 +352,6 @@ const handleResponse = async (response) => {
     return processed;
   } catch (error) {
     console.error('API Response Error:', error);
-    throw new Error(error.message || 'Failed to parse server response');
+    throw error;
   }
 };
