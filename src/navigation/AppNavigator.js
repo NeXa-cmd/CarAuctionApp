@@ -118,7 +118,7 @@ const MainTabs = () => {
     >
       <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false }} />
       <Tab.Screen name="Auctions" component={AuctionsStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Watchlist" component={WatchlistScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="Watchlist" component={WatchlistScreen} options={{ headerShown: true, title: 'Watchlist' }} />
       <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false }} />
     </Tab.Navigator>
   );

@@ -85,7 +85,6 @@ const WatchlistScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Watchlist</Text>
       <FlatList
         data={watchlist}
         renderItem={({ item }) => (

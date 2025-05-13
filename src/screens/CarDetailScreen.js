@@ -12,7 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import socketService from '../services/socket';
-import { placeBid as apiPlaceBid, getAuctionById, addToWatchlist, removeFromWatchlist } from '../services/api';
+import { placeBid as apiPlaceBid, getAuctionById, addToWatchlist, removeFromWatchlist, getWatchlist } from '../services/api';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-toast-message';
 import { useAuth } from '../contexts/AuthContext';
@@ -161,6 +161,23 @@ const CarDetailScreen = ({ route, navigation }) => {
       }
     };
   }, [auction?._id]);
+
+  useEffect(() => {
+    const checkWatchlist = async () => {
+      try {
+        const response = await getWatchlist();
+        const watchlist = response.data || [];
+        if (auction && auction.car && auction.car._id) {
+          setIsInWatchlist(watchlist.some(car => car._id === auction.car._id));
+        }
+      } catch (error) {
+        // Optionally handle error
+      }
+    };
+    if (auction && auction.car && auction.car._id) {
+      checkWatchlist();
+    }
+  }, [auction && auction.car && auction.car._id]);
 
   const getDetails = (car) => [
     { id: '1', icon: 'speedometer-outline', label: 'Mileage', value: car.mileage ? `${car.mileage.toLocaleString()} mi` : 'N/A' },
