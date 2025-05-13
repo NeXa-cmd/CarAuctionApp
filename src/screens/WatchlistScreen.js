@@ -20,7 +20,19 @@ const WatchlistScreen = ({ navigation }) => {
     try {
       setLoading(true);
       const response = await getWatchlist();
-      setWatchlist(response.data || []);
+      const cars = response.data || [];
+      // Fetch auction for each car
+      const watchlistWithAuctions = await Promise.all(
+        cars.map(async (car) => {
+          try {
+            const auction = await getAuctionByCarId(car._id);
+            return { car, auction };
+          } catch {
+            return { car, auction: null };
+          }
+        })
+      );
+      setWatchlist(watchlistWithAuctions);
     } catch (error) {
       console.error('Error loading watchlist:', error);
       Toast.show({
@@ -73,15 +85,17 @@ const WatchlistScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.header}>Watchlist</Text>
       <FlatList
         data={watchlist}
         renderItem={({ item }) => (
           <CarCard
-            car={item}
-            onPress={() => handleCarPress(item._id)}
+            car={item.car}
+            auction={item.auction}
+            onPress={() => handleCarPress(item.car._id)}
           />
         )}
-        keyExtractor={item => item._id}
+        keyExtractor={item => item.car._id}
         contentContainerStyle={styles.listContainer}
         refreshControl={
           <RefreshControl
@@ -107,6 +121,14 @@ const styles = StyleSheet.create({
   centerContent: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  header: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 24,
+    marginBottom: 8,
+    color: '#222',
   },
   listContainer: {
     padding: 16,
