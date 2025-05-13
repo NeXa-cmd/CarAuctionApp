@@ -108,6 +108,8 @@ const MainTabs = () => {
             iconName = focused ? 'pricetag' : 'pricetag-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
+          } else if (route.name === 'Watchlist') {
+            iconName = focused ? 'heart' : 'heart-outline';
           }
 
           return <Icon name={iconName} size={size} color={color} />;
@@ -116,6 +118,7 @@ const MainTabs = () => {
     >
       <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false }} />
       <Tab.Screen name="Auctions" component={AuctionsStack} options={{ headerShown: false }} />
+      <Tab.Screen name="Watchlist" component={WatchlistScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false }} />
     </Tab.Navigator>
   );

@@ -3,7 +3,9 @@ import { Platform } from 'react-native';
 
 // For iOS simulator, use localhost
 // For Android emulator, use 10.0.2.2
-const API_URL = 'http://157.230.124.2:5001/api';
+const API_URL = Platform.OS === 'ios' 
+  ? 'http://localhost:5001/api'
+  : 'http://10.0.2.2:5001/api';
 
 // Helper function to get headers
 const getHeaders = async () => {
