@@ -12,12 +12,12 @@ import {
   Platform,
 } from 'react-native';
 import socketService from '../services/socket';
-import { placeBid as apiPlaceBid, getAuctionById } from '../services/api';
+import { placeBid as apiPlaceBid, getAuctionById, addToWatchlist, removeFromWatchlist } from '../services/api';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-toast-message';
 import { useAuth } from '../contexts/AuthContext';
 
-const API_URL = Platform.OS === 'ios' ? 'http://157.230.124.2:5001/api' : 'http://10.0.2.2:5001/api';
+const API_URL = Platform.OS === 'ios' ? 'http://157.230.124.2:5001/api' : 'http://157.230.124.2:5001/api';
 
 const CarDetailScreen = ({ route, navigation }) => {
   const { auctionId } = route.params;
@@ -27,6 +27,7 @@ const CarDetailScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [timeLeft, setTimeLeft] = useState('');
+  const [isInWatchlist, setIsInWatchlist] = useState(false);
 
   const calculateTimeLeft = (endTime) => {
     const now = new Date().getTime();
@@ -185,6 +186,32 @@ const CarDetailScreen = ({ route, navigation }) => {
     }
   };
 
+  const toggleWatchlist = async () => {
+    try {
+      if (isInWatchlist) {
+        await removeFromWatchlist(auction.car._id);
+        Toast.show({
+          type: 'success',
+          text1: 'Removed from watchlist',
+        });
+      } else {
+        await addToWatchlist(auction.car._id);
+        Toast.show({
+          type: 'success',
+          text1: 'Added to watchlist',
+        });
+      }
+      setIsInWatchlist(!isInWatchlist);
+    } catch (error) {
+      console.error('Error toggling watchlist:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to update watchlist',
+      });
+    }
+  };
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -272,6 +299,17 @@ const CarDetailScreen = ({ route, navigation }) => {
             {auction.car.description || 'No description available'}
           </Text>
         </View>
+
+        <TouchableOpacity
+          style={styles.watchlistButton}
+          onPress={toggleWatchlist}
+        >
+          <Icon
+            name={isInWatchlist ? 'heart' : 'heart-outline'}
+            size={24}
+            color={isInWatchlist ? '#FF3B30' : '#8E8E93'}
+          />
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -445,6 +483,22 @@ const styles = StyleSheet.create({
   },
   bidButtonDisabled: {
     backgroundColor: '#A0A0A0',
+  },
+  watchlistButton: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 

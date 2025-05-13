@@ -4,7 +4,7 @@ import { API_URL } from '@env';
 
 // For iOS simulator, use localhost
 // For Android emulator, use 10.0.2.2
-const SOCKET_URL = Platform.OS === 'ios' ? 'http://157.230.124.2:5001' : 'http://10.0.2.2:5001';
+const SOCKET_URL = Platform.OS === 'ios' ? 'http://157.230.124.2:5001' : 'http://157.230.124.2:5001';
 
 // Event types
 const EVENTS = {

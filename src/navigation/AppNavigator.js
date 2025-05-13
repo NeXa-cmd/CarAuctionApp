@@ -13,6 +13,7 @@ import EditProfileScreen from '../screens/EditProfileScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import MyAuctionsScreen from '../screens/MyAuctionsScreen';
+import WatchlistScreen from '../screens/WatchlistScreen';
 
 // Create a default auth context in case the real one fails
 const defaultAuth = {
@@ -202,6 +203,14 @@ const AppNavigator = () => {
               options={{
                 headerShown: true,
                 title: 'Car Details'
+              }}
+            />
+            <Stack.Screen
+              name="Watchlist"
+              component={WatchlistScreen}
+              options={{
+                title: 'My Watchlist',
+                headerShown: true,
               }}
             />
           </>

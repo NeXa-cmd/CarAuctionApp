@@ -243,6 +243,45 @@ export const uploadImages = async (images) => {
   }
 };
 
+// Watchlist APIs
+export const getWatchlist = async () => {
+  try {
+    const response = await fetch(`${API_URL}/users/watchlist`, {
+      headers: await getHeaders(),
+    });
+    return handleResponse(response);
+  } catch (error) {
+    console.error('Error fetching watchlist:', error);
+    throw error;
+  }
+};
+
+export const addToWatchlist = async (carId) => {
+  try {
+    const response = await fetch(`${API_URL}/users/watchlist/${carId}`, {
+      method: 'POST',
+      headers: await getHeaders(),
+    });
+    return handleResponse(response);
+  } catch (error) {
+    console.error('Error adding to watchlist:', error);
+    throw error;
+  }
+};
+
+export const removeFromWatchlist = async (carId) => {
+  try {
+    const response = await fetch(`${API_URL}/users/watchlist/${carId}`, {
+      method: 'DELETE',
+      headers: await getHeaders(),
+    });
+    return handleResponse(response);
+  } catch (error) {
+    console.error('Error removing from watchlist:', error);
+    throw error;
+  }
+};
+
 // Error handler
 const handleResponse = async (response) => {
   try {
