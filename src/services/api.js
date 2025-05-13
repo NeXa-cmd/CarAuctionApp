@@ -355,3 +355,15 @@ const handleResponse = async (response) => {
     throw error;
   }
 };
+
+export const getAuctionByCarId = async (carId) => {
+  try {
+    const response = await fetch(`${API_URL}/auctions/by-car/${carId}`, {
+      headers: await getHeaders(),
+    });
+    return handleResponse(response).then(res => res.data);
+  } catch (error) {
+    console.error(`Error fetching auction by carId ${carId}:`, error);
+    throw error;
+  }
+};

@@ -375,4 +375,27 @@ router.post('/:id/bid', protect, async (req, res) => {
   }
 });
 
+// Get auction by car ID
+router.get('/by-car/:carId', async (req, res) => {
+  try {
+    const auction = await Auction.findOne({ car: req.params.carId })
+      .populate({
+        path: 'car',
+        model: 'Car',
+        select: 'make model year images mileage color title description condition transmission'
+      })
+      .populate('winner', 'username email')
+      .populate('bids.bidder', 'username email');
+
+    if (!auction) {
+      return res.status(404).json({ message: 'Auction not found for this car' });
+    }
+
+    const transformedAuction = transformAuctionData(auction);
+    res.json({ data: transformedAuction });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

@@ -8,7 +8,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import CarCard from '../components/CarCard';
-import { getWatchlist } from '../services/api';
+import { getWatchlist, getAuctionByCarId } from '../services/api';
 import Toast from 'react-native-toast-message';
 
 const WatchlistScreen = ({ navigation }) => {
@@ -43,6 +43,26 @@ const WatchlistScreen = ({ navigation }) => {
     loadWatchlist();
   };
 
+  const handleCarPress = async (carId) => {
+    try {
+      const auction = await getAuctionByCarId(carId);
+      if (auction && auction._id) {
+        navigation.navigate('CarDetail', { auctionId: auction._id });
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'No auction found for this car',
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to fetch auction',
+      });
+    }
+  };
+
   if (loading && !refreshing) {
     return (
       <View style={[styles.container, styles.centerContent]}>
@@ -58,7 +78,7 @@ const WatchlistScreen = ({ navigation }) => {
         renderItem={({ item }) => (
           <CarCard
             car={item}
-            onPress={() => navigation.navigate('CarDetail', { carId: item._id })}
+            onPress={() => handleCarPress(item._id)}
           />
         )}
         keyExtractor={item => item._id}
